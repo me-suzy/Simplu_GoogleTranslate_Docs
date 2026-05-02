@@ -1,0 +1,13 @@
+2026-05-02 15:48:58,217 [INFO] Log: D:\Simplu_GoogleTranslate_Docs\logs\google_translate_chrome_20260502_154858.log
+2026-05-02 15:48:58,219 [INFO] ARCHIVE_PATH=g:\ARHIVA\C
+2026-05-02 15:48:58,219 [INFO] MAX_UPLOAD_BYTES=5000000
+2026-05-02 15:48:58,219 [INFO] TRANSLATE_WAIT_SEC=60
+2026-05-02 15:48:58,219 [INFO] BETWEEN_PARTS_SEC=60
+2026-05-02 15:48:58,223 [INFO] Resume: adaug 1 documente din state, chiar daca nu mai sunt in sursa.
+2026-05-02 15:48:58,223 [INFO] Documente gasite: 1
+2026-05-02 15:48:59,245 [INFO] [1/1] Reiau din state fara original in sursa: g:\ARHIVA\C\arritmias-en-pediatria_compress.docx | parti=1
+2026-05-02 15:48:59,245 [INFO] Parti upload: 1
+2026-05-02 15:48:59,247 [INFO] Resume: am gasit deja 1/1 parti traduse pentru arritmias-en-pediatria_compress.docx
+2026-05-02 15:48:59,247 [INFO] Skip upload parte 1/1, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_153428\arritmias-en-pediatria_compress.docx
+2026-05-02 15:49:16,707 [INFO] PDF final: D:\Simplu_GoogleTranslate_Docs\final_pdf\arritmias-en-pediatria_compress_FINALIZAT.pdf
+2026-05-02 15:49:16,751 [INFO] Gata. Documente finalizate in aceasta rulare: 1

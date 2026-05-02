@@ -1,0 +1,22 @@
+2026-05-02 10:31:56,886 [INFO] Log: D:\Simplu_GoogleTranslate_Docs\logs\google_translate_chrome_20260502_103156.log
+2026-05-02 10:31:56,888 [INFO] ARCHIVE_PATH=g:\ARHIVA\C
+2026-05-02 10:31:56,888 [INFO] MAX_UPLOAD_BYTES=5000000
+2026-05-02 10:31:56,888 [INFO] TRANSLATE_WAIT_SEC=60
+2026-05-02 10:31:56,888 [INFO] BETWEEN_PARTS_SEC=60
+2026-05-02 10:31:56,889 [INFO] Resume: adaug 1 documente neterminate din state, chiar daca nu mai sunt in sursa.
+2026-05-02 10:31:56,890 [INFO] Documente gasite: 2
+2026-05-02 10:31:57,825 [INFO] [1/2] Reiau din state fara original in sursa: g:\ARHIVA\C\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292.docx | parti=4
+2026-05-02 10:31:57,828 [INFO] Parti upload: 4
+2026-05-02 10:31:57,832 [INFO] Resume: am gasit deja 4/4 parti traduse pentru dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292.docx
+2026-05-02 10:31:57,832 [INFO] Skip upload parte 1/4, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_093708\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea1.docx
+2026-05-02 10:31:57,832 [INFO] Skip upload parte 2/4, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_093708\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea2.docx
+2026-05-02 10:31:57,832 [INFO] Skip upload parte 3/4, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_093708\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea3.docx
+2026-05-02 10:31:57,832 [INFO] Skip upload parte 4/4, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_093708\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea4.docx
+2026-05-02 10:32:52,370 [INFO] PDF final: D:\Simplu_GoogleTranslate_Docs\final_pdf\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_FINALIZAT.pdf
+2026-05-02 10:32:52,378 [INFO] [2/2] Pregatesc: g:\ARHIVA\C\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress.docx (4.94 MB)
+2026-05-02 10:32:52,379 [INFO] Split necesar: D:\Simplu_GoogleTranslate_Docs\work\converted_doc\f9ee65a620f6\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress.docx (4.94 MB)
+2026-05-02 10:35:28,703 [INFO] Parte: nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea1.docx (3.62 MB)
+2026-05-02 10:35:28,703 [INFO] Parte: nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea2.docx (4.11 MB)
+2026-05-02 10:35:28,917 [INFO] Parti upload: 2
+2026-05-02 10:35:28,919 [INFO] Finalize-only: nu am toate partile traduse pentru nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress.docx (0/2), sar.
+2026-05-02 10:35:28,923 [INFO] Gata. Documente finalizate in aceasta rulare: 1

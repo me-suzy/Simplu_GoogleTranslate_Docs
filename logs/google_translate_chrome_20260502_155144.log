@@ -1,0 +1,43 @@
+2026-05-02 15:51:44,422 [INFO] Log: D:\Simplu_GoogleTranslate_Docs\logs\google_translate_chrome_20260502_155144.log
+2026-05-02 15:51:44,423 [INFO] ARCHIVE_PATH=g:\ARHIVA\C
+2026-05-02 15:51:44,423 [INFO] MAX_UPLOAD_BYTES=5000000
+2026-05-02 15:51:44,424 [INFO] TRANSLATE_WAIT_SEC=60
+2026-05-02 15:51:44,424 [INFO] BETWEEN_PARTS_SEC=60
+2026-05-02 15:51:44,434 [INFO] Documente gasite: 7
+2026-05-02 15:51:44,470 [INFO] [1/7] Pregatesc: g:\ARHIVA\C\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx (0.35 MB)
+2026-05-02 15:51:44,470 [INFO] Fara split: cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx (0.35 MB)
+2026-05-02 15:51:44,480 [INFO] Parti upload: 1
+2026-05-02 15:51:44,680 [INFO] Upload parte 1/1: cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx
+2026-05-02 15:51:44,680 [INFO] Traduc: g:\ARHIVA\C\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx
+2026-05-02 15:51:51,366 [INFO] Click buton: traduceți
+2026-05-02 15:51:51,366 [INFO] Traducere pornita; astept 60 secunde inainte de download.
+2026-05-02 15:52:51,405 [INFO] Click buton: descărcați traducerea
+2026-05-02 15:52:53,410 [INFO] Descarcat: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_155144\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx
+2026-05-02 15:53:01,469 [INFO] PDF final: D:\Simplu_GoogleTranslate_Docs\final_pdf\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends_FINALIZAT.pdf
+2026-05-02 15:53:01,470 [INFO] [2/7] Pregatesc: g:\ARHIVA\C\diagnostico-clinico-y-tratamiento_compress.docx (12.19 MB)
+2026-05-02 15:53:01,645 [INFO] Split necesar: D:\Simplu_GoogleTranslate_Docs\work\converted_doc\ef596025956e\diagnostico-clinico-y-tratamiento_compress.docx (12.19 MB)
+2026-05-02 15:59:50,009 [INFO] Inca exista parti peste limita la 3 parti: diagnostico-clinico-y-tratamiento_compress_partea1.docx=5.26MB, diagnostico-clinico-y-tratamiento_compress_partea2.docx=5.70MB, diagnostico-clinico-y-tratamiento_compress_partea3.docx=6.03MB
+2026-05-02 16:04:49,544 [INFO] Parte: diagnostico-clinico-y-tratamiento_compress_partea1.docx (4.25 MB)
+2026-05-02 16:04:49,544 [INFO] Parte: diagnostico-clinico-y-tratamiento_compress_partea2.docx (3.87 MB)
+2026-05-02 16:04:49,544 [INFO] Parte: diagnostico-clinico-y-tratamiento_compress_partea3.docx (4.53 MB)
+2026-05-02 16:04:49,545 [INFO] Parte: diagnostico-clinico-y-tratamiento_compress_partea4.docx (4.45 MB)
+2026-05-02 16:04:49,910 [INFO] Parti upload: 4
+2026-05-02 16:04:49,914 [INFO] Upload parte 1/4: diagnostico-clinico-y-tratamiento_compress_partea1.docx
+2026-05-02 16:04:49,914 [INFO] Traduc: D:\Simplu_GoogleTranslate_Docs\work\parts\ef596025956e\diagnostico-clinico-y-tratamiento_compress_partea1.docx
+2026-05-02 16:04:57,072 [INFO] Click buton: traduceți
+2026-05-02 16:04:57,073 [INFO] Traducere pornita; astept 60 secunde inainte de download.
+2026-05-02 16:05:57,315 [INFO] Click buton: descărcați traducerea
+2026-05-02 16:05:59,317 [INFO] Descarcat: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_155144\diagnostico-clinico-y-tratamiento_compress_partea1.docx
+2026-05-02 16:05:59,318 [INFO] Pauza intre parti: 60 secunde
+2026-05-02 16:06:59,319 [INFO] Upload parte 2/4: diagnostico-clinico-y-tratamiento_compress_partea2.docx
+2026-05-02 16:06:59,320 [INFO] Traduc: D:\Simplu_GoogleTranslate_Docs\work\parts\ef596025956e\diagnostico-clinico-y-tratamiento_compress_partea2.docx
+2026-05-02 16:07:06,480 [INFO] Click buton: traduceți
+2026-05-02 16:07:06,480 [INFO] Traducere pornita; astept 60 secunde inainte de download.
+2026-05-02 16:08:06,737 [INFO] Click buton: descărcați traducerea
+2026-05-02 16:08:08,739 [INFO] Descarcat: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_155144\diagnostico-clinico-y-tratamiento_compress_partea2.docx
+2026-05-02 16:08:08,740 [INFO] Pauza intre parti: 60 secunde
+2026-05-02 16:09:08,742 [INFO] Upload parte 3/4: diagnostico-clinico-y-tratamiento_compress_partea3.docx
+2026-05-02 16:09:08,742 [INFO] Traduc: D:\Simplu_GoogleTranslate_Docs\work\parts\ef596025956e\diagnostico-clinico-y-tratamiento_compress_partea3.docx
+2026-05-02 16:09:15,779 [INFO] Click buton: traduceți
+2026-05-02 16:09:15,780 [INFO] Traducere pornita; astept 60 secunde inainte de download.
+2026-05-02 16:10:15,811 [INFO] Click buton: descărcați traducerea

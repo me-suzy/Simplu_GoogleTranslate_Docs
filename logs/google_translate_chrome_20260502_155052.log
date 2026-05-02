@@ -1,0 +1,19 @@
+2026-05-02 15:50:52,127 [INFO] Log: D:\Simplu_GoogleTranslate_Docs\logs\google_translate_chrome_20260502_155052.log
+2026-05-02 15:50:52,128 [INFO] ARCHIVE_PATH=g:\ARHIVA\C
+2026-05-02 15:50:52,129 [INFO] MAX_UPLOAD_BYTES=5000000
+2026-05-02 15:50:52,129 [INFO] TRANSLATE_WAIT_SEC=60
+2026-05-02 15:50:52,129 [INFO] BETWEEN_PARTS_SEC=60
+2026-05-02 15:50:52,131 [INFO] Documente gasite: 7
+2026-05-02 15:50:52,958 [INFO] [1/7] Pregatesc: g:\ARHIVA\C\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx (0.35 MB)
+2026-05-02 15:50:52,968 [INFO] Fara split: cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx (0.35 MB)
+2026-05-02 15:50:52,981 [INFO] Parti upload: 1
+2026-05-02 15:50:56,090 [INFO] Pornesc Chrome debug pe profilul: C:\Users\necul\AppData\Local\Google\Chrome\User Data\Default
+2026-05-02 15:50:59,154 [INFO] PowerShell Start-ChromeDebug stdout:
+[CLEANUP] Opresc Chrome si ChromeDriver...
+[START] Chrome debug port 9222
+[START] Profil: C:\Users\necul\AppData\Local\Google\Chrome\User Data\Default
+[OK] Chrome debug raspunde pe http://127.0.0.1:9222/json/version
+2026-05-02 15:51:00,570 [INFO] Upload parte 1/1: cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx
+2026-05-02 15:51:00,571 [INFO] Traduc: g:\ARHIVA\C\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx
+2026-05-02 15:51:08,455 [INFO] Click buton: traduceți
+2026-05-02 15:51:08,456 [INFO] Traducere pornita; astept 60 secunde inainte de download.

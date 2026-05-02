@@ -1,0 +1,36 @@
+{
+  "source": "D:\\Simplu_GoogleTranslate_Docs\\work\\converted_doc\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress.docx",
+  "source_size": 8347410,
+  "source_mtime": 1777746741.6028419,
+  "pages": 583,
+  "part_count": 3,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 194,
+      "size": 4886745,
+      "updated_at": "2026-05-02T21:54:33"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx",
+      "start_page": 195,
+      "end_page": 388,
+      "size": 2807231,
+      "updated_at": "2026-05-02T21:54:43"
+    },
+    {
+      "index": 3,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx",
+      "start_page": 389,
+      "end_page": 583,
+      "size": 3277217,
+      "updated_at": "2026-05-02T21:54:57"
+    }
+  ],
+  "updated_at": "2026-05-02T21:54:57"
+}

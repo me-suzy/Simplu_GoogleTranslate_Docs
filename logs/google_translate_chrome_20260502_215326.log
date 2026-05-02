@@ -1,0 +1,30 @@
+2026-05-02 21:53:26,721 [INFO] Log: D:\Simplu_GoogleTranslate_Docs\logs\google_translate_chrome_20260502_215326.log
+2026-05-02 21:53:26,723 [INFO] ARCHIVE_PATH=g:\ARHIVA\C
+2026-05-02 21:53:26,723 [INFO] MAX_UPLOAD_BYTES=5000000
+2026-05-02 21:53:26,723 [INFO] MAX_PAGES_PER_PART=400
+2026-05-02 21:53:26,723 [INFO] TRANSLATE_WAIT_SEC=60
+2026-05-02 21:53:26,723 [INFO] BETWEEN_PARTS_SEC=60
+2026-05-02 21:53:26,725 [INFO] Documente gasite: 1
+2026-05-02 21:53:27,725 [INFO] [1/1] Pregatesc: g:\ARHIVA\C\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress.docx (7.96 MB)
+2026-05-02 21:53:47,182 [INFO] Split necesar: D:\Simplu_GoogleTranslate_Docs\work\converted_doc\f666c5952ea7\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress.docx (7.96 MB, 583 pagini; limita 4.76837158203125 MB si 400 pagini/parte)
+2026-05-02 21:53:47,195 [INFO] Split incep: partea 1/2 | pagini 1-291 -> diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx
+2026-05-02 21:53:48,093 [INFO] Split terminat: partea 1/2 | pagini 1-291 | 0.01 MB | D:\Simplu_GoogleTranslate_Docs\work\parts\f666c5952ea7\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx
+2026-05-02 21:53:48,094 [INFO] Split incep: partea 2/2 | pagini 292-583 -> diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx
+2026-05-02 21:54:22,167 [INFO] Split terminat: partea 2/2 | pagini 292-583 | 10.41 MB | D:\Simplu_GoogleTranslate_Docs\work\parts\f666c5952ea7\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx
+2026-05-02 21:54:22,168 [INFO] Inca exista parti peste limita de MB la 2 parti: diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx=10.41MB
+2026-05-02 21:54:22,184 [INFO] Split incep: partea 1/3 | pagini 1-194 -> diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx
+2026-05-02 21:54:33,475 [INFO] Split terminat: partea 1/3 | pagini 1-194 | 4.66 MB | D:\Simplu_GoogleTranslate_Docs\work\parts\f666c5952ea7\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx
+2026-05-02 21:54:33,476 [INFO] Split incep: partea 2/3 | pagini 195-388 -> diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx
+2026-05-02 21:54:43,532 [INFO] Split terminat: partea 2/3 | pagini 195-388 | 2.68 MB | D:\Simplu_GoogleTranslate_Docs\work\parts\f666c5952ea7\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx
+2026-05-02 21:54:43,535 [INFO] Split incep: partea 3/3 | pagini 389-583 -> diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx
+2026-05-02 21:54:57,116 [INFO] Split terminat: partea 3/3 | pagini 389-583 | 3.13 MB | D:\Simplu_GoogleTranslate_Docs\work\parts\f666c5952ea7\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx
+2026-05-02 21:54:57,117 [INFO] Parte: diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx (4.66 MB, pagini 1-194, total 194)
+2026-05-02 21:54:57,118 [INFO] Parte: diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx (2.68 MB, pagini 195-388, total 194)
+2026-05-02 21:54:57,118 [INFO] Parte: diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx (3.13 MB, pagini 389-583, total 195)
+2026-05-02 21:54:57,336 [INFO] Parti upload: 3
+2026-05-02 21:54:57,337 [INFO] Resume: am gasit deja 3/3 parti traduse pentru diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress.docx
+2026-05-02 21:54:57,338 [INFO] Skip upload parte 1/3, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_210011\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx
+2026-05-02 21:54:57,338 [INFO] Skip upload parte 2/3, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_210011\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx
+2026-05-02 21:54:57,338 [INFO] Skip upload parte 3/3, traducere existenta: D:\Simplu_GoogleTranslate_Docs\downloads\20260502_210011\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx
+2026-05-02 21:56:38,000 [INFO] PDF final: D:\Simplu_GoogleTranslate_Docs\final_pdf\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_FINALIZAT.pdf
+2026-05-02 21:56:38,250 [INFO] Gata. Documente finalizate in aceasta rulare: 1
