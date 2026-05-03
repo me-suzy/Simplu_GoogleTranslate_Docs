@@ -1,0 +1,36 @@
+{
+  "source": "D:\\Simplu_GoogleTranslate_Docs\\work\\converted_doc\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress.docx",
+  "source_size": 5180000,
+  "source_mtime": 1777703544.5775354,
+  "pages": 1092,
+  "part_count": 3,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 364,
+      "size": 2541300,
+      "updated_at": "2026-05-02T22:40:50"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea2.docx",
+      "start_page": 365,
+      "end_page": 728,
+      "size": 2682617,
+      "updated_at": "2026-05-02T22:41:09"
+    },
+    {
+      "index": 3,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea3.docx",
+      "start_page": 729,
+      "end_page": 1092,
+      "size": 2923283,
+      "updated_at": "2026-05-02T22:41:36"
+    }
+  ],
+  "updated_at": "2026-05-02T22:41:36"
+}

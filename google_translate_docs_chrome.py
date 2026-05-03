@@ -53,6 +53,7 @@ START_CHROME_PS1 = POWERSHELL_DIR / "Start-ChromeDebug.ps1"
 STATE_FILE = PROJECT_DIR / "state_google_translate_chrome.json"
 
 MAX_UPLOAD_BYTES = int(os.environ.get("SIMPLU_GT_MAX_BYTES", "5000000"))
+MIN_SOURCE_BYTES = int(os.environ.get("SIMPLU_GT_MIN_SOURCE_BYTES", str(50 * 1024)))
 MAX_PAGES_PER_PART = int(os.environ.get("SIMPLU_GT_MAX_PAGES_PER_PART", "400"))
 TRANSLATE_WAIT_SEC = int(os.environ.get("SIMPLU_GT_TRANSLATE_WAIT_SEC", "60"))
 BETWEEN_PARTS_SEC = int(os.environ.get("SIMPLU_GT_BETWEEN_PARTS_SEC", "60"))
@@ -201,6 +202,49 @@ def collect_translated_parts_from_state_or_disk(
 def is_rpc_unavailable(exc: Exception) -> bool:
     text = str(exc).lower()
     return "-2147023174" in text or "rpc server is unavailable" in text
+
+
+def is_word_corrupt_or_unreadable(exc: Exception) -> bool:
+    text = str(exc).lower()
+    needles = [
+        "appears to be corrupted",
+        "file appears to be corrupted",
+        "corrupted",
+        "is corrupt",
+        "word experienced an error trying to open the file",
+        "-2146822496",
+    ]
+    return any(needle in text for needle in needles)
+
+
+def file_signature(path: Path) -> dict:
+    try:
+        st = path.stat()
+        return {"source_size": st.st_size, "source_mtime": st.st_mtime}
+    except OSError:
+        return {}
+
+
+def is_same_skipped_source(existing: dict, path: Path) -> bool:
+    signature = file_signature(path)
+    return (
+        existing.get("status") == "skipped"
+        and signature
+        and existing.get("source_size") == signature.get("source_size")
+        and existing.get("source_mtime") == signature.get("source_mtime")
+    )
+
+
+def mark_document_skipped(state: dict, key: str, original: Path, reason: str, detail: str) -> None:
+    state["documents"][key] = {
+        "original": str(original),
+        "status": "skipped",
+        "skip_reason": reason,
+        "skip_detail": detail[:1000],
+        **file_signature(original),
+        "updated_at": now_iso(),
+    }
+    save_state(state)
 
 
 class WordManager:
@@ -859,8 +903,24 @@ def process_documents(args: argparse.Namespace) -> int:
             ):
                 logger.info("[%s/%s] Skip deja finalizat: %s", index, len(docs), original)
                 continue
+            if original.exists() and is_same_skipped_source(existing, original) and not args.force:
+                logger.info(
+                    "[%s/%s] Skip deja marcat: %s | motiv=%s",
+                    index,
+                    len(docs),
+                    original,
+                    existing.get("skip_reason", "necunoscut"),
+                )
+                continue
 
             if original.exists():
+                source_size = original.stat().st_size
+                if source_size < MIN_SOURCE_BYTES:
+                    detail = f"Fisier prea mic: {source_size} bytes, sub limita {MIN_SOURCE_BYTES} bytes"
+                    logger.warning("[%s/%s] Skip fisier incomplet/prea mic: %s | %s", index, len(docs), original, detail)
+                    mark_document_skipped(state, key, original, "too_small", detail)
+                    continue
+
                 logger.info("[%s/%s] Pregatesc: %s (%.2f MB)", index, len(docs), original, file_mb(original))
 
                 def checkpoint_split(saved_parts, done_index, total_parts, start_page, end_page, out_path):
@@ -880,7 +940,45 @@ def process_documents(args: argparse.Namespace) -> int:
                     }
                     save_state(state)
 
-                prepared = prepare_document(word, original, on_split_part_saved=checkpoint_split)
+                try:
+                    prepared = prepare_document(word, original, on_split_part_saved=checkpoint_split)
+                except Exception as exc:
+                    if is_rpc_unavailable(exc):
+                        logger.warning(
+                            "[%s/%s] Word COM/RPC a cazut la pregatire. Repornesc Word si reincerc: %s",
+                            index,
+                            len(docs),
+                            original,
+                        )
+                        word.restart()
+                        try:
+                            prepared = prepare_document(word, original, on_split_part_saved=checkpoint_split)
+                        except Exception as retry_exc:
+                            if is_word_corrupt_or_unreadable(retry_exc):
+                                detail = str(retry_exc)
+                                logger.warning(
+                                    "[%s/%s] Skip fisier corupt/necitibil dupa retry: %s | %s",
+                                    index,
+                                    len(docs),
+                                    original,
+                                    detail,
+                                )
+                                mark_document_skipped(state, key, original, "corrupt_or_unreadable", detail)
+                                continue
+                            raise
+                    elif is_word_corrupt_or_unreadable(exc):
+                        detail = str(exc)
+                        logger.warning(
+                            "[%s/%s] Skip fisier corupt/necitibil: %s | %s",
+                            index,
+                            len(docs),
+                            original,
+                            detail,
+                        )
+                        mark_document_skipped(state, key, original, "corrupt_or_unreadable", detail)
+                        continue
+                    else:
+                        raise
             else:
                 state_parts = [Path(p) for p in existing.get("parts", []) if p]
                 resume_parts = [p for p in state_parts if p.exists()]
@@ -1036,6 +1134,7 @@ def main() -> int:
     args = parse_args()
     logger.info("ARCHIVE_PATH=%s", ARCHIVE_PATH)
     logger.info("MAX_UPLOAD_BYTES=%s", MAX_UPLOAD_BYTES)
+    logger.info("MIN_SOURCE_BYTES=%s", MIN_SOURCE_BYTES)
     logger.info("MAX_PAGES_PER_PART=%s", MAX_PAGES_PER_PART)
     logger.info("TRANSLATE_WAIT_SEC=%s", TRANSLATE_WAIT_SEC)
     logger.info("BETWEEN_PARTS_SEC=%s", BETWEEN_PARTS_SEC)

@@ -1,0 +1,28 @@
+{
+  "source": "g:\\ARHIVA\\C\\conceptos-de-pediatria_compress.docx",
+  "source_size": 4300751,
+  "source_mtime": 1777787438.9111218,
+  "pages": 597,
+  "part_count": 2,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\3bc2935f5ee5\\conceptos-de-pediatria_compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 298,
+      "size": 2383287,
+      "updated_at": "2026-05-03T18:22:05"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\3bc2935f5ee5\\conceptos-de-pediatria_compress_partea2.docx",
+      "start_page": 299,
+      "end_page": 597,
+      "size": 3461060,
+      "updated_at": "2026-05-03T18:22:17"
+    }
+  ],
+  "updated_at": "2026-05-03T18:22:17"
+}

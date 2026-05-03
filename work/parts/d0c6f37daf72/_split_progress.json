@@ -1,0 +1,44 @@
+{
+  "source": "g:\\ARHIVA\\C\\libro-rojo-pediatria-2003_compress.docx",
+  "source_size": 3409829,
+  "source_mtime": 1777785292.3773682,
+  "pages": 1109,
+  "part_count": 4,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 277,
+      "size": 1312152,
+      "updated_at": "2026-05-03T22:08:34"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea2.docx",
+      "start_page": 278,
+      "end_page": 554,
+      "size": 1739427,
+      "updated_at": "2026-05-03T22:08:45"
+    },
+    {
+      "index": 3,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea3.docx",
+      "start_page": 555,
+      "end_page": 831,
+      "size": 1689754,
+      "updated_at": "2026-05-03T22:08:54"
+    },
+    {
+      "index": 4,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea4.docx",
+      "start_page": 832,
+      "end_page": 1109,
+      "size": 1780619,
+      "updated_at": "2026-05-03T22:09:06"
+    }
+  ],
+  "updated_at": "2026-05-03T22:09:06"
+}

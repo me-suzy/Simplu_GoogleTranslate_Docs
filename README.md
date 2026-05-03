@@ -53,6 +53,7 @@ Scriptul porneste Chrome debug automat daca portul `9222` nu raspunde. Foloseste
 
 - `SIMPLU_GT_MAX_FILES=1` - proceseaza doar primul document, util pentru test
 - `SIMPLU_GT_MAX_BYTES=5000000` - limita maxima pentru fiecare upload
+- `SIMPLU_GT_MIN_SOURCE_BYTES=51200` - sare peste fisierele `.doc/.docx` mai mici de 50 KB, de obicei descarcari incomplete
 - `SIMPLU_GT_MAX_PAGES_PER_PART=400` - limita maxima de pagini pentru fiecare upload
 - `SIMPLU_GT_TRANSLATE_WAIT_SEC=60` - asteptare dupa apasarea butonului Translate
 - `SIMPLU_GT_BETWEEN_PARTS_SEC=60` - pauza intre partile aceluiasi document

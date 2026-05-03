@@ -1,0 +1,36 @@
+{
+  "source": "D:\\Simplu_GoogleTranslate_Docs\\work\\converted_doc\\ba56b815c286\\bizancio-e-europa_compress.docx",
+  "source_size": 10959935,
+  "source_mtime": 1777821278.3157935,
+  "pages": 228,
+  "part_count": 3,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ba56b815c286\\bizancio-e-europa_compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 76,
+      "size": 3512370,
+      "updated_at": "2026-05-03T18:14:41"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ba56b815c286\\bizancio-e-europa_compress_partea2.docx",
+      "start_page": 77,
+      "end_page": 152,
+      "size": 4392811,
+      "updated_at": "2026-05-03T18:14:41"
+    },
+    {
+      "index": 3,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ba56b815c286\\bizancio-e-europa_compress_partea3.docx",
+      "start_page": 153,
+      "end_page": 228,
+      "size": 3255955,
+      "updated_at": "2026-05-03T18:14:42"
+    }
+  ],
+  "updated_at": "2026-05-03T18:14:42"
+}

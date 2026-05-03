@@ -1,97 +1,225 @@
-﻿{
-    "documents":  {
-                      "991f9dce2113":  {
-                                           "original":  "g:\\ARHIVA\\C\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292.docx",
-                                           "status":  "done",
-                                           "parts":  [
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\991f9dce2113\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea1.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\991f9dce2113\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea2.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\991f9dce2113\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea3.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\991f9dce2113\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea4.docx"
-                                                     ],
-                                           "translated_parts":  [
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_093708\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea1.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_093708\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea2.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_093708\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea3.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_093708\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_partea4.docx"
-                                                                ],
-                                           "final_pdf":  "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\dolor-agudo-fisiopatologia-diagnostico-tratamiento-9789978776292_FINALIZAT.pdf",
-                                           "updated_at":  "2026-05-02T10:32:52"
-                                       },
-                      "f9ee65a620f6":  {
-                                           "original":  "g:\\ARHIVA\\C\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress.docx",
-                                           "status":  "prepared",
-                                           "parts":  [
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea1.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea2.docx"
-                                                     ],
-                                           "translated_parts":  [
-
-                                                                ],
-                                           "updated_at":  "2026-05-02T10:35:28"
-                                       },
-                      "e432c4261d61":  {
-                                           "original":  "g:\\ARHIVA\\C\\arritmias-en-pediatria_compress.docx",
-                                           "status":  "done",
-                                           "parts":  [
-                                                         "g:\\ARHIVA\\C\\arritmias-en-pediatria_compress.docx"
-                                                     ],
-                                           "translated_parts":  [
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_153428\\arritmias-en-pediatria_compress.docx"
-                                                                ],
-                                           "final_pdf":  "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\arritmias-en-pediatria_compress_FINALIZAT.pdf",
-                                           "updated_at":  "2026-05-02T15:49:16"
-                                       },
-                      "297c93e670f2":  {
-                                           "original":  "g:\\ARHIVA\\C\\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx",
-                                           "status":  "done",
-                                           "parts":  [
-                                                         "g:\\ARHIVA\\C\\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx"
-                                                     ],
-                                           "translated_parts":  [
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_155144\\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends .docx"
-                                                                ],
-                                           "final_pdf":  "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\cismaru diana maria ed leovaridis cristina dumitriu diana luiza eds 2016 trends_FINALIZAT.pdf",
-                                           "updated_at":  "2026-05-02T15:53:01"
-                                       },
-                      "ef596025956e":  {
-                                           "original":  "g:\\ARHIVA\\C\\diagnostico-clinico-y-tratamiento_compress.docx",
-                                           "status":  "done",
-                                           "parts":  [
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ef596025956e\\diagnostico-clinico-y-tratamiento_compress_partea1.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ef596025956e\\diagnostico-clinico-y-tratamiento_compress_partea2.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ef596025956e\\diagnostico-clinico-y-tratamiento_compress_partea3.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ef596025956e\\diagnostico-clinico-y-tratamiento_compress_partea4.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ef596025956e\\diagnostico-clinico-y-tratamiento_compress_partea5.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ef596025956e\\diagnostico-clinico-y-tratamiento_compress_partea6.docx"
-                                                     ],
-                                           "translated_parts":  [
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-clinico-y-tratamiento_compress_partea1.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-clinico-y-tratamiento_compress_partea2.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-clinico-y-tratamiento_compress_partea3.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-clinico-y-tratamiento_compress_partea4.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-clinico-y-tratamiento_compress_partea5.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-clinico-y-tratamiento_compress_partea6.docx"
-                                                                ],
-                                           "final_pdf":  "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\Stephen J, McPhee - Diagnostic clinic si tratament.pdf",
-                                           "updated_at":  "2026-05-02T21:32:21"
-                                       },
-                      "f666c5952ea7":  {
-                                           "original":  "g:\\ARHIVA\\C\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress.docx",
-                                           "status":  "done",
-                                           "parts":  [
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx",
-                                                         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx"
-                                                     ],
-                                           "translated_parts":  [
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx",
-                                                                    "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx"
-                                                                ],
-                                           "final_pdf":  "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_FINALIZAT.pdf",
-                                           "updated_at":  "2026-05-02T21:56:38"
-                                       }
-                  },
-    "updated_at":  "2026-05-02T21:58:51"
+{
+  "documents": {
+    "f666c5952ea7": {
+      "original": "g:\\ARHIVA\\C\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f666c5952ea7\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_210011\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_partea3.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\diagnostico-y-tratamiento-de-las-alteraciones-del-movimiento_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-02T22:06:30"
+    },
+    "d0f7f8ef776f": {
+      "original": "g:\\ARHIVA\\C\\diagnostico-y-tratamiento-en-el-dolor_compress.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\diagnostico-y-tratamiento-en-el-dolor_compress.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-el-dolor_compress.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\diagnostico-y-tratamiento-en-el-dolor_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-02T22:09:41"
+    },
+    "442d84091f87": {
+      "original": "g:\\ARHIVA\\C\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea4.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea5.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea6.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea7.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\442d84091f87\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea8.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea4.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea5.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea6.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea7.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_partea8.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\diagnostico-y-tratamiento-en-otorrinolaringologia_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-02T22:38:37"
+    },
+    "f9ee65a620f6": {
+      "original": "g:\\ARHIVA\\C\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f9ee65a620f6\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea3.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_partea3.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\nutricion-diagnostico-y-tratamiento-1-2016nbsped-9788416353637_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-02T22:53:40"
+    },
+    "8f1d34dcb927": {
+      "original": "g:\\ARHIVA\\C\\onicopatias-guia-practica-de-diagnostico-tratamiento-y-manejo_compress.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\onicopatias-guia-practica-de-diagnostico-tratamiento-y-manejo_compress.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260502_220259\\onicopatias-guia-practica-de-diagnostico-tratamiento-y-manejo_compress.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\onicopatias-guia-practica-de-diagnostico-tratamiento-y-manejo_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-02T22:55:29"
+    },
+    "5bb5b58106a3": {
+      "original": "g:\\ARHIVA\\C\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea4.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea5.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea6.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\5bb5b58106a3\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea7.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea4.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea5.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea6.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_partea7.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\actuacion-de-enfermeria-en-urgencias-manual-de-protocolos_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T18:14:38"
+    },
+    "ba56b815c286": {
+      "original": "g:\\ARHIVA\\C\\bizancio-e-europa_compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ba56b815c286\\bizancio-e-europa_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ba56b815c286\\bizancio-e-europa_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\ba56b815c286\\bizancio-e-europa_compress_partea3.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\bizancio-e-europa_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\bizancio-e-europa_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\bizancio-e-europa_compress_partea3.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\bizancio-e-europa_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T18:21:33"
+    },
+    "3bc2935f5ee5": {
+      "original": "g:\\ARHIVA\\C\\conceptos-de-pediatria_compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\3bc2935f5ee5\\conceptos-de-pediatria_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\3bc2935f5ee5\\conceptos-de-pediatria_compress_partea2.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\conceptos-de-pediatria_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\conceptos-de-pediatria_compress_partea2.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\conceptos-de-pediatria_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T18:27:47"
+    },
+    "b8b5c7ab0276": {
+      "original": "g:\\ARHIVA\\C\\cristianesimo-e-lotta-di-classe_compress.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\cristianesimo-e-lotta-di-classe_compress.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\cristianesimo-e-lotta-di-classe_compress.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\cristianesimo-e-lotta-di-classe_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T18:29:26"
+    },
+    "751c39efbdb2": {
+      "original": "g:\\ARHIVA\\C\\de-la-enfermedad-de-las-montaas-y-otras-enfermedades-semejantes-1533.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\de-la-enfermedad-de-las-montaas-y-otras-enfermedades-semejantes-1533.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\de-la-enfermedad-de-las-montaas-y-otras-enfermedades-semejantes-1533.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\de-la-enfermedad-de-las-montaas-y-otras-enfermedades-semejantes-1533_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T18:31:11"
+    },
+    "b38a708357fe": {
+      "original": "g:\\ARHIVA\\C\\enfermedades-clostridiales.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\enfermedades-clostridiales.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_175517\\enfermedades-clostridiales.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\enfermedades-clostridiales_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T18:32:54"
+    },
+    "e84b47aff265": {
+      "original": "g:\\ARHIVA\\C\\enfermedades-respiratorias.docx",
+      "status": "skipped",
+      "skip_reason": "too_small",
+      "skip_detail": "Fisier prea mic: 1462 bytes, sub limita 51200 bytes",
+      "source_size": 1462,
+      "source_mtime": 1777804462.8729196,
+      "updated_at": "2026-05-03T22:07:00"
+    },
+    "97b2d1ce6055": {
+      "original": "g:\\ARHIVA\\C\\enfermedades-respiratorias-viricas-en-avicultura-bronquitis-infecciosa-gripe-aviar-y-enfermedad-de-newcastle-primera-impresion.docx",
+      "status": "skipped",
+      "skip_reason": "too_small",
+      "skip_detail": "Fisier prea mic: 1662 bytes, sub limita 51200 bytes",
+      "source_size": 1662,
+      "source_mtime": 1777808232.1311438,
+      "updated_at": "2026-05-03T22:07:00"
+    },
+    "29ec366f9436": {
+      "original": "g:\\ARHIVA\\C\\infecciones-respiratorias-en-pediatria.docx",
+      "status": "skipped",
+      "skip_reason": "too_small",
+      "skip_detail": "Fisier prea mic: 1486 bytes, sub limita 51200 bytes",
+      "source_size": 1486,
+      "source_mtime": 1777803422.738958,
+      "updated_at": "2026-05-03T22:07:09"
+    },
+    "d0c6f37daf72": {
+      "original": "g:\\ARHIVA\\C\\libro-rojo-pediatria-2003_compress.docx",
+      "status": "prepared",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea4.docx"
+      ],
+      "translated_parts": [],
+      "updated_at": "2026-05-03T22:09:06"
+    },
+    "d80487eb5af5": {
+      "original": "g:\\ARHIVA\\C\\pediatria.docx",
+      "status": "skipped",
+      "skip_reason": "too_small",
+      "skip_detail": "Fisier prea mic: 1428 bytes, sub limita 51200 bytes",
+      "source_size": 1428,
+      "source_mtime": 1777806737.7399368,
+      "updated_at": "2026-05-03T22:09:06"
+    }
+  },
+  "updated_at": "2026-05-03T22:09:06"
 }
