@@ -58,7 +58,7 @@ MAX_PAGES_PER_PART = int(os.environ.get("SIMPLU_GT_MAX_PAGES_PER_PART", "400"))
 TRANSLATE_WAIT_SEC = int(os.environ.get("SIMPLU_GT_TRANSLATE_WAIT_SEC", "60"))
 DOWNLOAD_WAIT_SEC = int(os.environ.get("SIMPLU_GT_DOWNLOAD_WAIT_SEC", "420"))
 BETWEEN_PARTS_SEC = int(os.environ.get("SIMPLU_GT_BETWEEN_PARTS_SEC", "60"))
-MAX_SPLIT_PARTS = int(os.environ.get("SIMPLU_GT_MAX_SPLIT_PARTS", "30"))
+MAX_SPLIT_PARTS = int(os.environ.get("SIMPLU_GT_MAX_SPLIT_PARTS", "120"))
 TRANSLATE_ERROR_RETRIES = int(os.environ.get("SIMPLU_GT_TRANSLATE_ERROR_RETRIES", "2"))
 DOWNLOAD_ERROR_RETRIES = int(os.environ.get("SIMPLU_GT_DOWNLOAD_ERROR_RETRIES", "2"))
 KEEP_INTERMEDIATE = os.environ.get("SIMPLU_GT_KEEP_INTERMEDIATE", "0") == "1"
@@ -81,7 +81,7 @@ WD_ACTIVE_END_PAGE_NUMBER = 3
 WD_GOTO_PAGE = 1
 WD_GOTO_ABSOLUTE = 1
 WD_PAGE_BREAK = 7
-PAGE_SPLIT_METHOD_VERSION = 2
+PAGE_SPLIT_METHOD_VERSION = 3
 
 
 def setup_logging() -> logging.Logger:
@@ -234,6 +234,15 @@ def is_download_timeout(exc: Exception) -> bool:
     return "download-ul traducerii nu a aparut la timp" in str(exc).lower()
 
 
+def is_lost_browser_window(exc: Exception) -> bool:
+    text = str(exc).lower()
+    return (
+        "no such window" in text
+        or "target window already closed" in text
+        or "web view not found" in text
+    )
+
+
 def file_signature(path: Path) -> dict:
     try:
         st = path.stat()
@@ -262,6 +271,10 @@ def mark_document_skipped(state: dict, key: str, original: Path, reason: str, de
         "updated_at": now_iso(),
     }
     save_state(state)
+
+
+class DocumentSplitError(RuntimeError):
+    pass
 
 
 class WordManager:
@@ -368,13 +381,22 @@ class WordManager:
             source_stat = source_docx.stat()
             meta_path = part_dir / "_split_progress.json"
 
-            for part_count in range(initial_parts, MAX_SPLIT_PARTS + 1):
+            ranges = self._initial_page_ranges(pages, initial_parts)
+            while True:
+                part_count = len(ranges)
+                if part_count > MAX_SPLIT_PARTS:
+                    raise DocumentSplitError(
+                        f"Nu am reusit sa impart {source_docx.name}: ar fi nevoie de peste "
+                        f"{MAX_SPLIT_PARTS} parti pentru limita de {MAX_UPLOAD_BYTES} bytes"
+                    )
+
                 expected_meta = {
                     "source": str(source_docx),
                     "source_size": source_stat.st_size,
                     "source_mtime": source_stat.st_mtime,
                     "pages": pages,
                     "part_count": part_count,
+                    "ranges": ranges,
                     "max_upload_bytes": MAX_UPLOAD_BYTES,
                     "max_pages_per_part": MAX_PAGES_PER_PART,
                     "split_method_version": PAGE_SPLIT_METHOD_VERSION,
@@ -404,14 +426,20 @@ class WordManager:
                 }
 
                 paths: list[Path] = []
-                ranges: list[tuple[int, int]] = []
-                for idx in range(part_count):
-                    start_page = int(idx * pages / part_count) + 1
-                    end_page = int((idx + 1) * pages / part_count)
-                    end_page = max(start_page, min(pages, end_page))
+                for idx, page_range in enumerate(ranges):
+                    start_page, end_page = int(page_range[0]), int(page_range[1])
                     out_path = part_dir / f"{base}_partea{idx + 1}.docx"
                     done_item = done_by_index.get(idx + 1)
-                    if done_item and out_path.exists() and out_path.stat().st_size > 0:
+                    done_range = [
+                        int(done_item.get("start_page", -1)),
+                        int(done_item.get("end_page", -1)),
+                    ] if done_item else []
+                    if (
+                        done_item
+                        and done_range == [start_page, end_page]
+                        and out_path.exists()
+                        and out_path.stat().st_size > 0
+                    ):
                         logger.info(
                             "Split deja existent: partea %s/%s | pagini %s-%s | %.2f MB | %s",
                             idx + 1,
@@ -457,14 +485,17 @@ class WordManager:
                             out_path,
                         )
                     paths.append(out_path)
-                    ranges.append((start_page, end_page))
                     if on_part_saved:
                         on_part_saved(paths.copy(), idx + 1, part_count, start_page, end_page, out_path)
 
-                too_big = [p for p in paths if p.stat().st_size > MAX_UPLOAD_BYTES]
+                too_big = [
+                    (idx, p, ranges[idx])
+                    for idx, p in enumerate(paths)
+                    if p.stat().st_size > MAX_UPLOAD_BYTES
+                ]
                 too_many_pages = [
-                    (p, start, end)
-                    for p, (start, end) in zip(paths, ranges)
+                    (idx, p, start, end)
+                    for idx, (p, (start, end)) in enumerate(zip(paths, ranges))
                     if end - start + 1 > MAX_PAGES_PER_PART
                 ]
                 if not too_big and not too_many_pages:
@@ -483,21 +514,57 @@ class WordManager:
                     logger.info(
                         "Inca exista parti peste limita de MB la %s parti: %s",
                         part_count,
-                        ", ".join(f"{p.name}={file_mb(p):.2f}MB" for p in too_big[:3]),
+                        ", ".join(f"{p.name}={file_mb(p):.2f}MB" for _, p, _ in too_big[:3]),
                     )
                 if too_many_pages:
                     logger.info(
                         "Inca exista parti peste limita de pagini la %s parti: %s",
                         part_count,
-                        ", ".join(f"{p.name}={end - start + 1} pagini" for p, start, end in too_many_pages[:3]),
+                        ", ".join(f"{p.name}={end - start + 1} pagini" for _, p, start, end in too_many_pages[:3]),
                     )
 
-            raise RuntimeError(
-                f"Nu am reusit sa impart {source_docx.name} in parti sub "
-                f"{MAX_UPLOAD_BYTES} bytes si {MAX_PAGES_PER_PART} pagini"
-            )
+                split_indexes = {idx for idx, _, _ in too_big}
+                split_indexes.update(idx for idx, _, _, _ in too_many_pages)
+                unsplittable = []
+                new_ranges: list[list[int]] = []
+                for idx, (start, end) in enumerate(ranges):
+                    if idx not in split_indexes:
+                        new_ranges.append([start, end])
+                        continue
+                    if start >= end:
+                        unsplittable.append((idx + 1, paths[idx], start, end))
+                        new_ranges.append([start, end])
+                        continue
+                    mid = (start + end) // 2
+                    new_ranges.append([start, mid])
+                    new_ranges.append([mid + 1, end])
+
+                if unsplittable:
+                    details = ", ".join(
+                        f"{p.name} pag.{start} ({file_mb(p):.2f}MB)"
+                        for _, p, start, _ in unsplittable[:5]
+                    )
+                    raise DocumentSplitError(
+                        f"Nu pot imparti mai mult {source_docx.name}; exista pagina individuala peste limita: {details}"
+                    )
+
+                logger.info(
+                    "Rafinez split adaptiv: %s -> %s parti; impart doar intervalele prea mari.",
+                    len(ranges),
+                    len(new_ranges),
+                )
+                ranges = new_ranges
         finally:
             doc.Close(False)
+
+    def _initial_page_ranges(self, pages: int, part_count: int) -> list[list[int]]:
+        ranges: list[list[int]] = []
+        for idx in range(part_count):
+            start_page = int(idx * pages / part_count) + 1
+            end_page = int((idx + 1) * pages / part_count)
+            end_page = max(start_page, min(pages, end_page))
+            ranges.append([start_page, end_page])
+        return ranges
 
     def _save_page_range(self, doc, start_page: int, end_page: int, out_path: Path) -> None:
         pages = max(1, int(doc.ComputeStatistics(WD_STATISTIC_PAGES)))
@@ -702,9 +769,26 @@ class ChromeTranslateBot:
             logger.warning("Nu pot seta download dir prin CDP: %s", exc)
         self._open_translate_single_tab()
 
+    def _restart_driver_session(self) -> None:
+        logger.warning("Reconectez ChromeDriver la Chrome debug dupa pierderea tabului activ.")
+        if self.driver is not None:
+            try:
+                self.driver.quit()
+            except Exception:
+                pass
+        self.driver = None
+        self.wait = None
+        time.sleep(2)
+        self.start()
+
     def _open_translate_single_tab(self) -> None:
         assert self.driver is not None
-        handles = list(self.driver.window_handles)
+        try:
+            handles = list(self.driver.window_handles)
+        except WebDriverException as exc:
+            if is_lost_browser_window(exc):
+                raise
+            raise
         if not handles:
             self.driver.switch_to.new_window("tab")
             handles = list(self.driver.window_handles)
@@ -778,6 +862,20 @@ class ChromeTranslateBot:
                     )
                     self._open_translate_single_tab()
                     time.sleep(15)
+                    continue
+                raise
+            except WebDriverException as exc:
+                last_error = exc
+                if is_lost_browser_window(exc) and attempt < max_attempts:
+                    logger.warning(
+                        "Tabul Chrome activ a disparut in timpul traducerii pentru %s (%s/%s): %s",
+                        upload_path.name,
+                        attempt,
+                        max_attempts,
+                        exc,
+                    )
+                    self._restart_driver_session()
+                    time.sleep(5)
                     continue
                 raise
 
@@ -999,7 +1097,9 @@ def process_documents(args: argparse.Namespace) -> int:
     resume_docs: list[Path] = []
     for key, entry in state.get("documents", {}).items():
         if entry.get("status") == "done" and not args.force:
-            continue
+            state_final = Path(entry.get("final_pdf", "")) if entry.get("final_pdf") else None
+            if state_final and state_final.exists():
+                continue
         if key in known_docs:
             continue
         original_text = entry.get("original")
@@ -1105,6 +1205,17 @@ def process_documents(args: argparse.Namespace) -> int:
                                 )
                                 mark_document_skipped(state, key, original, "corrupt_or_unreadable", detail)
                                 continue
+                            if isinstance(retry_exc, DocumentSplitError):
+                                detail = str(retry_exc)
+                                logger.warning(
+                                    "[%s/%s] Skip fisier imposibil de splitat dupa retry: %s | %s",
+                                    index,
+                                    len(docs),
+                                    original,
+                                    detail,
+                                )
+                                mark_document_skipped(state, key, original, "split_failed", detail)
+                                continue
                             raise
                     elif is_word_corrupt_or_unreadable(exc):
                         detail = str(exc)
@@ -1116,6 +1227,17 @@ def process_documents(args: argparse.Namespace) -> int:
                             detail,
                         )
                         mark_document_skipped(state, key, original, "corrupt_or_unreadable", detail)
+                        continue
+                    elif isinstance(exc, DocumentSplitError):
+                        detail = str(exc)
+                        logger.warning(
+                            "[%s/%s] Skip fisier imposibil de splitat sub limite: %s | %s",
+                            index,
+                            len(docs),
+                            original,
+                            detail,
+                        )
+                        mark_document_skipped(state, key, original, "split_failed", detail)
                         continue
                     else:
                         raise

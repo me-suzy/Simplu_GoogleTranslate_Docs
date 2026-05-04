@@ -348,14 +348,39 @@
     },
     "12591430756e": {
       "original": "g:\\ARHIVA\\C\\logica formal y logica transcendental compress.docx",
-      "status": "prepared",
+      "status": "done",
       "parts": [
         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\12591430756e\\logica formal y logica transcendental compress_partea1.docx",
         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\12591430756e\\logica formal y logica transcendental compress_partea2.docx"
       ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260504_095723\\logica formal y logica transcendental compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260504_095723\\logica formal y logica transcendental compress_partea2.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\logica formal y logica transcendental compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T11:24:01"
+    },
+    "7a0d2e70e584": {
+      "original": "g:\\ARHIVA\\C\\manual-de-medicina-neurocritica.docx",
+      "status": "prepared",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea4.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea5.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea6.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea7.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea8.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea9.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea10.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea11.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea12.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\7a0d2e70e584\\manual-de-medicina-neurocritica_partea13.docx"
+      ],
       "translated_parts": [],
-      "updated_at": "2026-05-04T09:53:18"
+      "updated_at": "2026-05-04T11:22:00"
     }
   },
-  "updated_at": "2026-05-04T09:53:18"
+  "updated_at": "2026-05-04T11:24:01"
 }
