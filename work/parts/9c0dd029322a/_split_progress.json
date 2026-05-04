@@ -1,0 +1,28 @@
+{
+  "source": "g:\\ARHIVA\\C\\logica formal logica dialectica compress.docx",
+  "source_size": 887534,
+  "source_mtime": 1777808568.8302314,
+  "pages": 401,
+  "part_count": 2,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\9c0dd029322a\\logica formal logica dialectica compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 200,
+      "size": 829828,
+      "updated_at": "2026-05-04T00:45:14"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\9c0dd029322a\\logica formal logica dialectica compress_partea2.docx",
+      "start_page": 201,
+      "end_page": 401,
+      "size": 752309,
+      "updated_at": "2026-05-04T00:45:17"
+    }
+  ],
+  "updated_at": "2026-05-04T00:45:17"
+}

@@ -1,0 +1,28 @@
+{
+  "source": "g:\\ARHIVA\\C\\logica dialectica compress.docx",
+  "source_size": 1261157,
+  "source_mtime": 1777806621.839995,
+  "pages": 559,
+  "part_count": 2,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\8d3d5309cb68\\logica dialectica compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 279,
+      "size": 902578,
+      "updated_at": "2026-05-04T00:40:20"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\8d3d5309cb68\\logica dialectica compress_partea2.docx",
+      "start_page": 280,
+      "end_page": 559,
+      "size": 1153214,
+      "updated_at": "2026-05-04T00:40:24"
+    }
+  ],
+  "updated_at": "2026-05-04T00:40:24"
+}

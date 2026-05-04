@@ -1,0 +1,28 @@
+{
+  "source": "g:\\ARHIVA\\C\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress.docx",
+  "source_size": 2295643,
+  "source_mtime": 1777810505.1362891,
+  "pages": 421,
+  "part_count": 2,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\aadb44a99bb5\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 210,
+      "size": 1053430,
+      "updated_at": "2026-05-04T00:19:18"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\aadb44a99bb5\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_partea2.docx",
+      "start_page": 211,
+      "end_page": 421,
+      "size": 2320894,
+      "updated_at": "2026-05-04T00:19:25"
+    }
+  ],
+  "updated_at": "2026-05-04T00:19:25"
+}

@@ -56,9 +56,11 @@ MAX_UPLOAD_BYTES = int(os.environ.get("SIMPLU_GT_MAX_BYTES", "5000000"))
 MIN_SOURCE_BYTES = int(os.environ.get("SIMPLU_GT_MIN_SOURCE_BYTES", str(50 * 1024)))
 MAX_PAGES_PER_PART = int(os.environ.get("SIMPLU_GT_MAX_PAGES_PER_PART", "400"))
 TRANSLATE_WAIT_SEC = int(os.environ.get("SIMPLU_GT_TRANSLATE_WAIT_SEC", "60"))
+DOWNLOAD_WAIT_SEC = int(os.environ.get("SIMPLU_GT_DOWNLOAD_WAIT_SEC", "420"))
 BETWEEN_PARTS_SEC = int(os.environ.get("SIMPLU_GT_BETWEEN_PARTS_SEC", "60"))
 MAX_SPLIT_PARTS = int(os.environ.get("SIMPLU_GT_MAX_SPLIT_PARTS", "30"))
 TRANSLATE_ERROR_RETRIES = int(os.environ.get("SIMPLU_GT_TRANSLATE_ERROR_RETRIES", "2"))
+DOWNLOAD_ERROR_RETRIES = int(os.environ.get("SIMPLU_GT_DOWNLOAD_ERROR_RETRIES", "2"))
 KEEP_INTERMEDIATE = os.environ.get("SIMPLU_GT_KEEP_INTERMEDIATE", "0") == "1"
 TRANSLATED_DOC_EXTENSIONS = {".doc", ".docx", ".pdf"}
 
@@ -163,9 +165,18 @@ def now_iso() -> str:
 
 def find_existing_translation_for_part(part: Path) -> Path | None:
     """Cauta o traducere deja descarcata pentru partea data, dupa numele fisierului."""
+    expected_suffix = part.suffix.lower()
+    expected_stem = part.stem
     candidates = [
-        p for p in DOWNLOADS_DIR.rglob(part.name)
-        if p.is_file() and p.suffix.lower() in TRANSLATED_DOC_EXTENSIONS
+        p for p in DOWNLOADS_DIR.rglob(f"*{part.suffix}")
+        if (
+            p.is_file()
+            and p.suffix.lower() == expected_suffix
+            and (
+                p.stem == expected_stem
+                or re.fullmatch(re.escape(expected_stem) + r" \(\d+\)", p.stem)
+            )
+        )
     ]
     if not candidates:
         return None
@@ -215,6 +226,10 @@ def is_word_corrupt_or_unreadable(exc: Exception) -> bool:
         "-2146822496",
     ]
     return any(needle in text for needle in needles)
+
+
+def is_download_timeout(exc: Exception) -> bool:
+    return "download-ul traducerii nu a aparut la timp" in str(exc).lower()
 
 
 def file_signature(path: Path) -> dict:
@@ -689,11 +704,14 @@ class ChromeTranslateBot:
             raise RuntimeError("ChromeTranslateBot nu este pornit")
 
         last_error: Exception | None = None
-        for attempt in range(1, TRANSLATE_ERROR_RETRIES + 2):
+        max_attempts = max(TRANSLATE_ERROR_RETRIES, DOWNLOAD_ERROR_RETRIES) + 1
+        for attempt in range(1, max_attempts + 1):
             try:
                 return self._translate_file_once(upload_path, attempt)
             except GoogleTranslateRetryableError as exc:
                 last_error = exc
+                if attempt > TRANSLATE_ERROR_RETRIES:
+                    raise
                 logger.warning(
                     "Google Translate a refuzat temporar fisierul (%s/%s): %s",
                     attempt,
@@ -702,6 +720,26 @@ class ChromeTranslateBot:
                 )
                 self._open_translate_single_tab()
                 time.sleep(10)
+            except TimeoutException as exc:
+                last_error = exc
+                existing = find_existing_translation_for_part(upload_path)
+                if existing and existing.exists():
+                    logger.info(
+                        "Download gasit dupa timeout, folosesc fisierul existent: %s",
+                        existing,
+                    )
+                    return existing
+                if is_download_timeout(exc) and attempt <= DOWNLOAD_ERROR_RETRIES:
+                    logger.warning(
+                        "Download-ul nu a aparut la timp pentru %s (%s/%s). Reincerc aceeasi parte.",
+                        upload_path.name,
+                        attempt,
+                        DOWNLOAD_ERROR_RETRIES + 1,
+                    )
+                    self._open_translate_single_tab()
+                    time.sleep(15)
+                    continue
+                raise
 
         raise RuntimeError(f"Nu am putut traduce dupa retry: {upload_path}") from last_error
 
@@ -725,7 +763,7 @@ class ChromeTranslateBot:
             ["Descarcati traducerea", "Download translation", "Download"],
             timeout=180,
         )
-        downloaded = self._wait_for_download(before, timeout=240)
+        downloaded = self._wait_for_download(before, timeout=DOWNLOAD_WAIT_SEC)
         logger.info("Descarcat: %s", downloaded)
         return downloaded
 
@@ -818,6 +856,7 @@ class ChromeTranslateBot:
         return {p.name for p in self.download_dir.glob("*") if p.is_file()}
 
     def _wait_for_download(self, before: set[str], timeout: int) -> Path:
+        start_time = time.time()
         deadline = time.time() + timeout
         while time.time() < deadline:
             candidates = [
@@ -831,6 +870,20 @@ class ChromeTranslateBot:
                 if not (self.download_dir / f"{newest.name}.crdownload").exists():
                     return newest
             time.sleep(2)
+        current_docs = [
+            p.name for p in self.download_dir.glob("*")
+            if p.is_file() and p.suffix.lower() in TRANSLATED_DOC_EXTENSIONS
+        ]
+        partials = [
+            p.name for p in self.download_dir.glob("*")
+            if p.is_file() and p.stat().st_mtime >= start_time and p.name.lower().endswith((".crdownload", ".tmp"))
+        ]
+        logger.warning(
+            "Timeout download. Director=%s | documente=%s | partiale recente=%s",
+            self.download_dir,
+            current_docs[-10:],
+            partials[-10:],
+        )
         raise TimeoutException("Download-ul traducerii nu a aparut la timp")
 
 
@@ -1074,7 +1127,28 @@ def process_documents(args: argparse.Namespace) -> int:
                     bot.start()
 
                 logger.info("Upload parte %s/%s: %s", part_index, len(prepared.upload_parts), part.name)
-                downloaded = bot.translate_file(part)
+                try:
+                    downloaded = bot.translate_file(part)
+                except (TimeoutException, GoogleTranslateRetryableError) as exc:
+                    logger.error(
+                        "Nu am putut finaliza upload/download pentru %s, partea %s/%s. Marchez pentru reluare: %s",
+                        original.name,
+                        part_index,
+                        len(prepared.upload_parts),
+                        exc,
+                    )
+                    state["documents"][key] = {
+                        "original": str(original),
+                        "status": "download_failed",
+                        "parts": [str(p) for p in prepared.upload_parts],
+                        "translated_parts": [str(p) for p in translated_parts if p],
+                        "failed_part_index": part_index,
+                        "failed_part": str(part),
+                        "error": str(exc)[:1000],
+                        "updated_at": now_iso(),
+                    }
+                    save_state(state)
+                    break
                 translated_parts[part_index - 1] = downloaded
                 state["documents"][key] = {
                     "original": str(original),

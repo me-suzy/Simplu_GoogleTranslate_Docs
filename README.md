@@ -56,6 +56,8 @@ Scriptul porneste Chrome debug automat daca portul `9222` nu raspunde. Foloseste
 - `SIMPLU_GT_MIN_SOURCE_BYTES=51200` - sare peste fisierele `.doc/.docx` mai mici de 50 KB, de obicei descarcari incomplete
 - `SIMPLU_GT_MAX_PAGES_PER_PART=400` - limita maxima de pagini pentru fiecare upload
 - `SIMPLU_GT_TRANSLATE_WAIT_SEC=60` - asteptare dupa apasarea butonului Translate
+- `SIMPLU_GT_DOWNLOAD_WAIT_SEC=420` - cat asteapta aparitia fisierului descarcat dupa click pe Download
 - `SIMPLU_GT_BETWEEN_PARTS_SEC=60` - pauza intre partile aceluiasi document
 - `SIMPLU_GT_TRANSLATE_ERROR_RETRIES=2` - cate retry-uri face daca Google afiseaza ca fisierul nu poate fi tradus momentan
+- `SIMPLU_GT_DOWNLOAD_ERROR_RETRIES=2` - cate retry-uri face pentru aceeasi parte daca download-ul nu apare la timp
 - `SIMPLU_GT_KEEP_INTERMEDIATE=1` - pastreaza fisierele intermediare dupa succes

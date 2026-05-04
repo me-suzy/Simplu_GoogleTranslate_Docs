@@ -1,0 +1,44 @@
+{
+  "source": "g:\\ARHIVA\\C\\historia de la logica formal compress.docx",
+  "source_size": 2620878,
+  "source_mtime": 1777805260.9002955,
+  "pages": 877,
+  "part_count": 4,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 219,
+      "size": 1110786,
+      "updated_at": "2026-05-04T00:06:44"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea2.docx",
+      "start_page": 220,
+      "end_page": 438,
+      "size": 1134068,
+      "updated_at": "2026-05-04T00:06:54"
+    },
+    {
+      "index": 3,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea3.docx",
+      "start_page": 439,
+      "end_page": 657,
+      "size": 1311871,
+      "updated_at": "2026-05-04T00:07:10"
+    },
+    {
+      "index": 4,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea4.docx",
+      "start_page": 658,
+      "end_page": 877,
+      "size": 1830513,
+      "updated_at": "2026-05-04T00:07:32"
+    }
+  ],
+  "updated_at": "2026-05-04T00:07:32"
+}

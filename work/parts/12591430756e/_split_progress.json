@@ -1,0 +1,28 @@
+{
+  "source": "g:\\ARHIVA\\C\\logica formal y logica transcendental compress.docx",
+  "source_size": 884848,
+  "source_mtime": 1777809259.0687194,
+  "pages": 410,
+  "part_count": 2,
+  "max_upload_bytes": 5000000,
+  "max_pages_per_part": 400,
+  "done_parts": [
+    {
+      "index": 1,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\12591430756e\\logica formal y logica transcendental compress_partea1.docx",
+      "start_page": 1,
+      "end_page": 205,
+      "size": 14429,
+      "updated_at": "2026-05-04T00:49:52"
+    },
+    {
+      "index": 2,
+      "path": "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\12591430756e\\logica formal y logica transcendental compress_partea2.docx",
+      "start_page": 206,
+      "end_page": 410,
+      "size": 1523475,
+      "updated_at": "2026-05-04T00:49:57"
+    }
+  ],
+  "updated_at": "2026-05-04T00:49:57"
+}

@@ -201,15 +201,21 @@
     },
     "d0c6f37daf72": {
       "original": "g:\\ARHIVA\\C\\libro-rojo-pediatria-2003_compress.docx",
-      "status": "prepared",
+      "status": "done",
       "parts": [
         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea1.docx",
         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea2.docx",
         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea3.docx",
         "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\d0c6f37daf72\\libro-rojo-pediatria-2003_compress_partea4.docx"
       ],
-      "translated_parts": [],
-      "updated_at": "2026-05-03T22:09:06"
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\libro-rojo-pediatria-2003_compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\libro-rojo-pediatria-2003_compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\libro-rojo-pediatria-2003_compress_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\libro-rojo-pediatria-2003_compress_partea4.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\libro-rojo-pediatria-2003_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:40:06"
     },
     "d80487eb5af5": {
       "original": "g:\\ARHIVA\\C\\pediatria.docx",
@@ -219,7 +225,137 @@
       "source_size": 1428,
       "source_mtime": 1777806737.7399368,
       "updated_at": "2026-05-03T22:09:06"
+    },
+    "8493115ae7dd": {
+      "original": "g:\\ARHIVA\\C\\ensayo-teatral-actuacion-y-puesta-en-escena.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\ensayo-teatral-actuacion-y-puesta-en-escena.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\ensayo-teatral-actuacion-y-puesta-en-escena.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\ensayo-teatral-actuacion-y-puesta-en-escena_FINALIZAT.pdf",
+      "updated_at": "2026-05-03T23:58:49"
+    },
+    "500a994b23e8": {
+      "original": "g:\\ARHIVA\\C\\filosofia-della-matematica-leredita-del-novecento-8815085106-9788815085108_compress.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\filosofia-della-matematica-leredita-del-novecento-8815085106-9788815085108_compress.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\filosofia-della-matematica-leredita-del-novecento-8815085106-9788815085108_compress.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\filosofia-della-matematica-leredita-del-novecento-8815085106-9788815085108_compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:00:38"
+    },
+    "c1ca13ef7958": {
+      "original": "g:\\ARHIVA\\C\\guia-de-practica-clinica-de-cirugia-menor-en-atencion-primaria.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\guia-de-practica-clinica-de-cirugia-menor-en-atencion-primaria.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\guia-de-practica-clinica-de-cirugia-menor-en-atencion-primaria.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\guia-de-practica-clinica-de-cirugia-menor-en-atencion-primaria_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:02:20"
+    },
+    "88d2259adfe9": {
+      "original": "g:\\ARHIVA\\C\\guia-de-practica-clinica-sobre-trastornos-del-sueo-en-la-infancia-y-adolescencia-en-atencion-primaria.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\guia-de-practica-clinica-sobre-trastornos-del-sueo-en-la-infancia-y-adolescencia-en-atencion-primaria.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\guia-de-practica-clinica-sobre-trastornos-del-sueo-en-la-infancia-y-adolescencia-en-atencion-primaria.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\guia-de-practica-clinica-sobre-trastornos-del-sueo-en-la-infancia-y-adolescencia-en-atencion-primaria_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:04:50"
+    },
+    "f58c539c68b4": {
+      "original": "g:\\ARHIVA\\C\\historia de la logica formal compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\f58c539c68b4\\historia de la logica formal compress_partea4.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\historia de la logica formal compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\historia de la logica formal compress_partea2.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\historia de la logica formal compress_partea3.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\historia de la logica formal compress_partea4.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\historia de la logica formal compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:19:02"
+    },
+    "aadb44a99bb5": {
+      "original": "g:\\ARHIVA\\C\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\aadb44a99bb5\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\aadb44a99bb5\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_partea2.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_partea2.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\il papavero da oppio nella cultura e nella religione romana 9788822265074 compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:24:23"
+    },
+    "89f4aac08e30": {
+      "original": "g:\\ARHIVA\\C\\la logica dialectica y las ciencias compress.docx",
+      "status": "done",
+      "parts": [
+        "g:\\ARHIVA\\C\\la logica dialectica y las ciencias compress.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\la logica dialectica y las ciencias compress.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\la logica dialectica y las ciencias compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:26:13"
+    },
+    "8d3d5309cb68": {
+      "original": "g:\\ARHIVA\\C\\logica dialectica compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\8d3d5309cb68\\logica dialectica compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\8d3d5309cb68\\logica dialectica compress_partea2.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\logica dialectica compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\logica dialectica compress_partea2.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\logica dialectica compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:45:05"
+    },
+    "9c0dd029322a": {
+      "original": "g:\\ARHIVA\\C\\logica formal logica dialectica compress.docx",
+      "status": "done",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\9c0dd029322a\\logica formal logica dialectica compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\9c0dd029322a\\logica formal logica dialectica compress_partea2.docx"
+      ],
+      "translated_parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\logica formal logica dialectica compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\downloads\\20260503_235622\\logica formal logica dialectica compress_partea2.docx"
+      ],
+      "final_pdf": "D:\\Simplu_GoogleTranslate_Docs\\final_pdf\\logica formal logica dialectica compress_FINALIZAT.pdf",
+      "updated_at": "2026-05-04T00:49:46"
+    },
+    "12591430756e": {
+      "original": "g:\\ARHIVA\\C\\logica formal y logica transcendental compress.docx",
+      "status": "running",
+      "parts": [
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\12591430756e\\logica formal y logica transcendental compress_partea1.docx",
+        "D:\\Simplu_GoogleTranslate_Docs\\work\\parts\\12591430756e\\logica formal y logica transcendental compress_partea2.docx"
+      ],
+      "translated_parts": [],
+      "updated_at": "2026-05-04T00:49:57"
     }
   },
-  "updated_at": "2026-05-03T22:09:06"
+  "updated_at": "2026-05-04T00:49:57"
 }
