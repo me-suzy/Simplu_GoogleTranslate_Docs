@@ -39,6 +39,8 @@ run_google_translate_chrome.bat
 
 Rularea normala reia automat progresul din `state_google_translate_chrome.json`: sare peste partile deja descarcate, face PDF pentru documentele complete si continua cu urmatorul `.doc/.docx` din `g:\ARHIVA\C`. In timpul split-ului, scriptul afiseaza fiecare parte terminata si salveaza checkpoint-uri dupa fiecare parte.
 
+Daca Google afiseaza `Nu s-a detectat continut care poate fi tradus`, partea respectiva este notata in state ca `no_content_parts`, este folosita ca passthrough in PDF-ul final si scriptul continua cu urmatoarea parte/document. Split-ul pe pagini foloseste o metoda mai robusta pentru documentele Word cu numerotare de pagini resetata sau pagini goale.
+
 Pentru primul test real, cu un singur document:
 
 ```bat

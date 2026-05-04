@@ -77,9 +77,11 @@ DEBUG_PORT = int(os.environ.get("SIMPLU_CHROME_DEBUG_PORT", "9222"))
 WORD_FORMAT_DOCX = 16
 WORD_EXPORT_PDF = 17
 WD_STATISTIC_PAGES = 2
+WD_ACTIVE_END_PAGE_NUMBER = 3
 WD_GOTO_PAGE = 1
 WD_GOTO_ABSOLUTE = 1
 WD_PAGE_BREAK = 7
+PAGE_SPLIT_METHOD_VERSION = 2
 
 
 def setup_logging() -> logging.Logger:
@@ -375,6 +377,7 @@ class WordManager:
                     "part_count": part_count,
                     "max_upload_bytes": MAX_UPLOAD_BYTES,
                     "max_pages_per_part": MAX_PAGES_PER_PART,
+                    "split_method_version": PAGE_SPLIT_METHOD_VERSION,
                 }
                 split_meta: dict = {}
                 if meta_path.exists():
@@ -497,12 +500,21 @@ class WordManager:
             doc.Close(False)
 
     def _save_page_range(self, doc, start_page: int, end_page: int, out_path: Path) -> None:
-        start = doc.GoTo(What=WD_GOTO_PAGE, Which=WD_GOTO_ABSOLUTE, Count=start_page).Start
         pages = max(1, int(doc.ComputeStatistics(WD_STATISTIC_PAGES)))
+        start = self._page_start_position(doc, start_page, pages)
         if end_page >= pages:
             end = doc.Content.End
         else:
-            end = doc.GoTo(What=WD_GOTO_PAGE, Which=WD_GOTO_ABSOLUTE, Count=end_page + 1).Start - 1
+            end = self._page_start_position(doc, end_page + 1, pages) - 1
+
+        if end <= start:
+            logger.warning(
+                "Interval pagini fara continut text detectabil: pagini %s-%s in %s",
+                start_page,
+                end_page,
+                out_path.name,
+            )
+            end = start
 
         src_range = doc.Range(Start=start, End=max(start, end))
         new_doc = self.app.Documents.Add()
@@ -511,6 +523,30 @@ class WordManager:
             new_doc.SaveAs2(str(out_path), FileFormat=WORD_FORMAT_DOCX)
         finally:
             new_doc.Close(False)
+
+    def _page_number_at_position(self, doc, position: int) -> int:
+        content_start = int(doc.Content.Start)
+        content_end = int(doc.Content.End)
+        if content_end <= content_start:
+            return 1
+        position = max(content_start, min(int(position), content_end - 1))
+        return int(doc.Range(position, position).Information(WD_ACTIVE_END_PAGE_NUMBER))
+
+    def _page_start_position(self, doc, target_page: int, total_pages: int) -> int:
+        if target_page <= 1:
+            return int(doc.Content.Start)
+        if target_page > total_pages:
+            return int(doc.Content.End)
+
+        lo = int(doc.Content.Start)
+        hi = int(doc.Content.End)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if self._page_number_at_position(doc, mid) >= target_page:
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
 
     def export_translated_parts_to_pdf(self, translated_parts: list[Path], original: Path) -> Path:
         last_error: Exception | None = None
@@ -580,6 +616,10 @@ class PreparedDocument:
 
 
 class GoogleTranslateRetryableError(RuntimeError):
+    pass
+
+
+class GoogleTranslateNoContentError(RuntimeError):
     pass
 
 
@@ -783,9 +823,7 @@ class ChromeTranslateBot:
         deadline = time.time() + timeout
         wanted = texts
         while time.time() < deadline:
-            error_text = self._translate_error_text()
-            if error_text:
-                raise GoogleTranslateRetryableError(error_text)
+            self._raise_translate_error_if_present()
 
             clicked = self.driver.execute_script(
                 """
@@ -821,12 +859,19 @@ class ChromeTranslateBot:
     def _wait_translate_delay_or_error(self, seconds: int) -> None:
         deadline = time.time() + seconds
         while time.time() < deadline:
-            error_text = self._translate_error_text()
-            if error_text:
-                raise GoogleTranslateRetryableError(error_text)
+            self._raise_translate_error_if_present()
             time.sleep(2)
 
-    def _translate_error_text(self) -> str | None:
+    def _raise_translate_error_if_present(self) -> None:
+        error = self._translate_error()
+        if not error:
+            return
+        kind, text = error
+        if kind == "no_content":
+            raise GoogleTranslateNoContentError(text)
+        raise GoogleTranslateRetryableError(text)
+
+    def _translate_error(self) -> tuple[str, str] | None:
         assert self.driver is not None
         try:
             text = self.driver.execute_script(
@@ -835,7 +880,46 @@ class ChromeTranslateBot:
         except WebDriverException:
             return None
 
-        normalized = normalize_for_match(str(text))
+        page_text = str(text)
+        normalized = normalize_for_match(page_text)
+        compact = re.sub(r"[^a-z0-9]+", " ", normalized).strip()
+
+        def has_any(needles: list[str]) -> bool:
+            for needle in needles:
+                needle_norm = normalize_for_match(needle)
+                needle_compact = re.sub(r"[^a-z0-9]+", " ", needle_norm).strip()
+                if needle_norm in normalized or needle_compact in compact:
+                    return True
+            return False
+
+        def first_matching_line(needles: list[str], fallback: str) -> str:
+            for line in page_text.splitlines():
+                line_norm = normalize_for_match(line)
+                line_compact = re.sub(r"[^a-z0-9]+", " ", line_norm).strip()
+                for needle in needles:
+                    needle_norm = normalize_for_match(needle)
+                    needle_compact = re.sub(r"[^a-z0-9]+", " ", needle_norm).strip()
+                    if needle_norm in line_norm or needle_compact in line_compact:
+                        return line.strip()
+            return fallback
+
+        no_content_needles = [
+            "nu s-a detectat continut care poate fi tradus",
+            "nu s a detectat continut care poate fi tradus",
+            "no translatable content detected",
+            "no translatable content was detected",
+            "no content that can be translated was detected",
+            "no content could be translated",
+        ]
+        if has_any(no_content_needles):
+            return (
+                "no_content",
+                first_matching_line(
+                    no_content_needles,
+                    "Nu s-a detectat continut care poate fi tradus.",
+                ),
+            )
+
         error_needles = [
             "momentan fisierul nu poate fi tradus",
             "fisierul nu poate fi tradus",
@@ -845,11 +929,14 @@ class ChromeTranslateBot:
             "try again in a few minutes",
             "the file could not be translated",
         ]
-        if any(needle in normalized for needle in error_needles):
-            for line in str(text).splitlines():
-                if any(needle in normalize_for_match(line) for needle in error_needles):
-                    return line.strip()
-            return "Momentan, fisierul nu poate fi tradus. Incercati din nou peste cateva minute."
+        if has_any(error_needles):
+            return (
+                "retryable",
+                first_matching_line(
+                    error_needles,
+                    "Momentan, fisierul nu poate fi tradus. Incercati din nou peste cateva minute.",
+                ),
+            )
         return None
 
     def _download_snapshot(self) -> set[str]:
@@ -1090,6 +1177,7 @@ def process_documents(args: argparse.Namespace) -> int:
                 allow_disk_lookup=allow_disk_resume,
             )
             translated_parts: list[Path | None] = list(translated_slots)
+            no_content_parts = list(resume_existing.get("no_content_parts", []))
             found_count = sum(1 for p in translated_parts if p and p.exists())
             if found_count:
                 logger.info(
@@ -1129,6 +1217,31 @@ def process_documents(args: argparse.Namespace) -> int:
                 logger.info("Upload parte %s/%s: %s", part_index, len(prepared.upload_parts), part.name)
                 try:
                     downloaded = bot.translate_file(part)
+                except GoogleTranslateNoContentError as exc:
+                    logger.warning(
+                        "Google nu a detectat continut traductibil pentru %s, partea %s/%s. "
+                        "Folosesc partea originala ca passthrough si continui: %s",
+                        original.name,
+                        part_index,
+                        len(prepared.upload_parts),
+                        exc,
+                    )
+                    translated_parts[part_index - 1] = part
+                    no_content_parts.append(str(part))
+                    state_entry = {
+                        "original": str(original),
+                        "status": "running",
+                        "parts": [str(p) for p in prepared.upload_parts],
+                        "translated_parts": [str(p) for p in translated_parts if p],
+                        "no_content_parts": no_content_parts,
+                        "updated_at": now_iso(),
+                    }
+                    state["documents"][key] = state_entry
+                    save_state(state)
+                    if part_index < len(prepared.upload_parts):
+                        logger.info("Pauza intre parti: %s secunde", BETWEEN_PARTS_SEC)
+                        time.sleep(BETWEEN_PARTS_SEC)
+                    continue
                 except (TimeoutException, GoogleTranslateRetryableError) as exc:
                     logger.error(
                         "Nu am putut finaliza upload/download pentru %s, partea %s/%s. Marchez pentru reluare: %s",
@@ -1150,13 +1263,16 @@ def process_documents(args: argparse.Namespace) -> int:
                     save_state(state)
                     break
                 translated_parts[part_index - 1] = downloaded
-                state["documents"][key] = {
+                state_entry = {
                     "original": str(original),
                     "status": "running",
                     "parts": [str(p) for p in prepared.upload_parts],
                     "translated_parts": [str(p) for p in translated_parts if p],
                     "updated_at": now_iso(),
                 }
+                if no_content_parts:
+                    state_entry["no_content_parts"] = no_content_parts
+                state["documents"][key] = state_entry
                 save_state(state)
                 if part_index < len(prepared.upload_parts):
                     logger.info("Pauza intre parti: %s secunde", BETWEEN_PARTS_SEC)
@@ -1174,7 +1290,7 @@ def process_documents(args: argparse.Namespace) -> int:
 
             pdf_path = word.export_translated_parts_to_pdf(ready_parts, original)
             logger.info("PDF final: %s", pdf_path)
-            state["documents"][key] = {
+            state_entry = {
                 "original": str(original),
                 "status": "done",
                 "parts": [str(p) for p in prepared.upload_parts],
@@ -1182,6 +1298,9 @@ def process_documents(args: argparse.Namespace) -> int:
                 "final_pdf": str(pdf_path),
                 "updated_at": now_iso(),
             }
+            if no_content_parts:
+                state_entry["no_content_parts"] = no_content_parts
+            state["documents"][key] = state_entry
             save_state(state)
             cleanup_document_intermediates(prepared, ready_parts)
             completed += 1
