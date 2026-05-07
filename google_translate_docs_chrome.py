@@ -197,15 +197,18 @@ def save_state(state: dict) -> None:
     STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def move_completed_source_documents(root: Path, final_dir: Path, state: dict) -> int:
-    if not root.exists() or not final_dir.exists():
+def move_completed_source_documents(root: Path, pdf_dirs: Iterable[Path], state: dict) -> int:
+    if not root.exists():
         return 0
 
     final_by_key: dict[str, Path] = {}
-    for pdf in final_dir.glob("*.pdf"):
-        key = title_match_key(final_pdf_source_stem(pdf))
-        if key:
-            final_by_key[key] = pdf
+    for pdf_dir in pdf_dirs:
+        if not pdf_dir.exists():
+            continue
+        for pdf in pdf_dir.glob("*.pdf"):
+            key = title_match_key(final_pdf_source_stem(pdf))
+            if key:
+                final_by_key[key] = pdf
     if not final_by_key:
         return 0
 
@@ -231,11 +234,12 @@ def move_completed_source_documents(root: Path, final_dir: Path, state: dict) ->
             "original": str(source),
             "status": "done",
             "final_pdf": str(final_pdf),
+            "matched_pdf_dir": str(final_pdf.parent),
             "source_moved_to": str(dest),
             **file_signature(dest),
             "updated_at": now_iso(),
         }
-        logger.info("Mutat original finalizat: %s -> %s | PDF=%s", source, dest, final_pdf.name)
+        logger.info("Mutat original finalizat: %s -> %s | PDF=%s", source, dest, final_pdf)
         moved += 1
 
     if moved:
@@ -1282,7 +1286,7 @@ def log_final_report(state: dict, completed_this_run: int) -> None:
 def process_documents(args: argparse.Namespace) -> int:
     ensure_dirs()
     state = load_state()
-    move_completed_source_documents(ARCHIVE_PATH, FINAL_DIR, state)
+    move_completed_source_documents(ARCHIVE_PATH, [FINAL_DIR, CONVERTED_PDF_DIR], state)
     docs = scan_documents(ARCHIVE_PATH)
     known_docs = {doc_id(p): p for p in docs}
     resume_docs: list[Path] = []
@@ -1664,6 +1668,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--force", action="store_true", help="Reproceseaza chiar daca PDF-ul final exista")
     parser.add_argument("--only-name", help="Proceseaza doar fisierele care contin acest text in nume")
     parser.add_argument("--report-only", action="store_true", help="Afiseaza raportul curent fara procesare")
+    parser.add_argument(
+        "--sync-completed-only",
+        action="store_true",
+        help="Muta doar DOCX-urile care au PDF corespondent, apoi afiseaza raportul",
+    )
     return parser.parse_args()
 
 
@@ -1678,6 +1687,12 @@ def main() -> int:
     if args.report_only:
         ensure_dirs()
         log_final_report(load_state(), 0)
+        return 0
+    if args.sync_completed_only:
+        ensure_dirs()
+        state = load_state()
+        move_completed_source_documents(ARCHIVE_PATH, [FINAL_DIR, CONVERTED_PDF_DIR], state)
+        log_final_report(state, 0)
         return 0
     return process_documents(args)
 
