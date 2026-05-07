@@ -54,6 +54,7 @@ STATE_FILE = PROJECT_DIR / "state_google_translate_chrome.json"
 COMPLETED_SOURCE_DIR = Path(
     os.environ.get("SIMPLU_GT_COMPLETED_SOURCE_DIR", str(ARCHIVE_PATH / "GATA FINALIZAT"))
 )
+CONVERTED_PDF_DIR = Path(os.environ.get("SIMPLU_GT_CONVERTED_PDF_DIR", r"d:\ENGLEZA\PDF-uri convertite"))
 
 MAX_UPLOAD_BYTES = int(os.environ.get("SIMPLU_GT_MAX_BYTES", "5000000"))
 MIN_SOURCE_BYTES = int(os.environ.get("SIMPLU_GT_MIN_SOURCE_BYTES", str(50 * 1024)))
@@ -1193,6 +1194,91 @@ def cleanup_document_intermediates(prepared: PreparedDocument, downloads: Iterab
             pass
 
 
+def count_files(directory: Path, pattern: str) -> int:
+    if not directory.exists():
+        return 0
+    return sum(1 for p in directory.glob(pattern) if p.is_file())
+
+
+def count_source_docs(directory: Path) -> int:
+    if not directory.exists():
+        return 0
+    return sum(
+        1
+        for p in directory.glob("*")
+        if p.is_file()
+        and p.suffix.lower() in {".doc", ".docx"}
+        and not p.name.startswith("~$")
+    )
+
+
+def summarize_problem_entry(entry: dict) -> tuple[str, str, int, int, str, str]:
+    parts = [p for p in entry.get("parts", []) if p]
+    translated_parts = [p for p in entry.get("translated_parts", []) if p]
+    detail = (
+        entry.get("error")
+        or entry.get("skip_detail")
+        or entry.get("skip_reason")
+        or "fara detalii in state"
+    )
+    detail = " ".join(str(detail).split())
+    return (
+        str(entry.get("original", "")),
+        str(entry.get("status", "necunoscut")),
+        len(translated_parts),
+        len(parts),
+        str(entry.get("failed_part_index", "")),
+        detail[:500],
+    )
+
+
+def log_final_report(state: dict, completed_this_run: int) -> None:
+    source_count = count_source_docs(ARCHIVE_PATH)
+    completed_source_count = count_source_docs(COMPLETED_SOURCE_DIR)
+    final_pdf_count = count_files(FINAL_DIR, "*.pdf")
+    converted_pdf_count = count_files(CONVERTED_PDF_DIR, "*.pdf")
+
+    logger.info("===== RAPORT FINAL =====")
+    logger.info("Finalizate in aceasta rulare: %s", completed_this_run)
+    logger.info("PDF-uri convertite ABBYY: %s | %s", converted_pdf_count, CONVERTED_PDF_DIR)
+    logger.info("DOCX ramase la tradus: %s | %s", source_count, ARCHIVE_PATH)
+    logger.info("DOCX in GATA FINALIZAT: %s | %s", completed_source_count, COMPLETED_SOURCE_DIR)
+    logger.info("PDF-uri finale traduse: %s | %s", final_pdf_count, FINAL_DIR)
+
+    problems = []
+    for entry in state.get("documents", {}).values():
+        status = entry.get("status")
+        if status == "done":
+            continue
+        original = Path(entry.get("original", "")) if entry.get("original") else None
+        if original and source_is_in_completed_dir(original):
+            continue
+        paths_to_check = []
+        if original:
+            paths_to_check.append(original)
+        paths_to_check.extend(Path(p) for p in entry.get("parts", []) if p)
+        paths_to_check.extend(Path(p) for p in entry.get("translated_parts", []) if p)
+        if paths_to_check and not any(p.exists() for p in paths_to_check):
+            continue
+        problems.append(summarize_problem_entry(entry))
+
+    if not problems:
+        logger.info("Niciun fisier problematic in state.")
+        return
+
+    logger.warning("Fisiere nefinalizate / sarite: %s", len(problems))
+    for original, status, translated_count, parts_count, failed_part, detail in sorted(problems):
+        logger.warning(
+            "NEFINALIZAT | status=%s | traduse=%s/%s | partea_esec=%s | fisier=%s | cauza=%s",
+            status,
+            translated_count,
+            parts_count,
+            failed_part or "-",
+            original,
+            detail,
+        )
+
+
 def process_documents(args: argparse.Namespace) -> int:
     ensure_dirs()
     state = load_state()
@@ -1561,6 +1647,7 @@ def process_documents(args: argparse.Namespace) -> int:
             cleanup_document_intermediates(prepared, ready_parts)
             completed += 1
 
+    log_final_report(state, completed)
     logger.info("Gata. Documente finalizate in aceasta rulare: %s", completed)
     return 0
 
@@ -1576,6 +1663,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-files", type=int, default=int(os.environ.get("SIMPLU_GT_MAX_FILES", "0")) or None)
     parser.add_argument("--force", action="store_true", help="Reproceseaza chiar daca PDF-ul final exista")
     parser.add_argument("--only-name", help="Proceseaza doar fisierele care contin acest text in nume")
+    parser.add_argument("--report-only", action="store_true", help="Afiseaza raportul curent fara procesare")
     return parser.parse_args()
 
 
@@ -1587,6 +1675,10 @@ def main() -> int:
     logger.info("MAX_PAGES_PER_PART=%s", MAX_PAGES_PER_PART)
     logger.info("TRANSLATE_WAIT_SEC=%s", TRANSLATE_WAIT_SEC)
     logger.info("BETWEEN_PARTS_SEC=%s", BETWEEN_PARTS_SEC)
+    if args.report_only:
+        ensure_dirs()
+        log_final_report(load_state(), 0)
+        return 0
     return process_documents(args)
 
 
