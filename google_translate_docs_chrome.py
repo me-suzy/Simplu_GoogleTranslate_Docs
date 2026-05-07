@@ -51,6 +51,9 @@ LOG_DIR = PROJECT_DIR / "logs"
 POWERSHELL_DIR = PROJECT_DIR / "PowerShell"
 START_CHROME_PS1 = POWERSHELL_DIR / "Start-ChromeDebug.ps1"
 STATE_FILE = PROJECT_DIR / "state_google_translate_chrome.json"
+COMPLETED_SOURCE_DIR = Path(
+    os.environ.get("SIMPLU_GT_COMPLETED_SOURCE_DIR", str(ARCHIVE_PATH / "GATA FINALIZAT"))
+)
 
 MAX_UPLOAD_BYTES = int(os.environ.get("SIMPLU_GT_MAX_BYTES", "5000000"))
 MIN_SOURCE_BYTES = int(os.environ.get("SIMPLU_GT_MIN_SOURCE_BYTES", str(50 * 1024)))
@@ -124,6 +127,37 @@ def normalize_for_match(text: str) -> str:
     return text.lower()
 
 
+def title_match_key(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", normalize_for_match(text)).strip()
+
+
+def final_pdf_source_stem(pdf: Path) -> str:
+    return re.sub(r"_FINALIZAT$", "", pdf.stem, flags=re.IGNORECASE)
+
+
+def source_is_in_completed_dir(path: Path) -> bool:
+    try:
+        completed_dir = COMPLETED_SOURCE_DIR.resolve()
+        resolved = path.resolve()
+        return completed_dir == resolved or completed_dir in resolved.parents
+    except OSError:
+        return False
+
+
+def unique_destination(directory: Path, name: str) -> Path:
+    dest = directory / name
+    if not dest.exists():
+        return dest
+    stem = Path(name).stem
+    suffix = Path(name).suffix
+    counter = 1
+    while True:
+        candidate = directory / f"{stem} ({counter}){suffix}"
+        if not candidate.exists():
+            return candidate
+        counter += 1
+
+
 def doc_id(path: Path) -> str:
     raw = str(path.resolve()).lower().encode("utf-8", errors="ignore")
     return hashlib.sha1(raw).hexdigest()[:12]
@@ -142,6 +176,7 @@ def scan_documents(root: Path) -> list[Path]:
         if p.is_file()
         and p.suffix.lower() in {".doc", ".docx"}
         and not p.name.startswith("~$")
+        and not source_is_in_completed_dir(p)
     ]
     docs.sort(key=lambda p: (alphabetical_key(p.parent), alphabetical_key(p)))
     return docs
@@ -159,6 +194,53 @@ def load_state() -> dict:
 def save_state(state: dict) -> None:
     state["updated_at"] = datetime.now().isoformat(timespec="seconds")
     STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def move_completed_source_documents(root: Path, final_dir: Path, state: dict) -> int:
+    if not root.exists() or not final_dir.exists():
+        return 0
+
+    final_by_key: dict[str, Path] = {}
+    for pdf in final_dir.glob("*.pdf"):
+        key = title_match_key(final_pdf_source_stem(pdf))
+        if key:
+            final_by_key[key] = pdf
+    if not final_by_key:
+        return 0
+
+    COMPLETED_SOURCE_DIR.mkdir(parents=True, exist_ok=True)
+    moved = 0
+    for source in root.rglob("*"):
+        if (
+            not source.is_file()
+            or source.suffix.lower() not in {".doc", ".docx"}
+            or source.name.startswith("~$")
+            or source_is_in_completed_dir(source)
+        ):
+            continue
+
+        final_pdf = final_by_key.get(title_match_key(safe_name(source.stem)))
+        if not final_pdf:
+            continue
+
+        old_key = doc_id(source)
+        dest = unique_destination(COMPLETED_SOURCE_DIR, source.name)
+        shutil.move(str(source), str(dest))
+        state["documents"][old_key] = {
+            "original": str(source),
+            "status": "done",
+            "final_pdf": str(final_pdf),
+            "source_moved_to": str(dest),
+            **file_signature(dest),
+            "updated_at": now_iso(),
+        }
+        logger.info("Mutat original finalizat: %s -> %s | PDF=%s", source, dest, final_pdf.name)
+        moved += 1
+
+    if moved:
+        save_state(state)
+        logger.info("Am mutat %s fisiere sursa deja finalizate in: %s", moved, COMPLETED_SOURCE_DIR)
+    return moved
 
 
 def now_iso() -> str:
@@ -267,6 +349,28 @@ def mark_document_skipped(state: dict, key: str, original: Path, reason: str, de
         "status": "skipped",
         "skip_reason": reason,
         "skip_detail": detail[:1000],
+        **file_signature(original),
+        "updated_at": now_iso(),
+    }
+    save_state(state)
+
+
+def mark_document_temp_skipped(
+    state: dict,
+    key: str,
+    original: Path,
+    reason: str,
+    detail: str,
+    parts: list[Path],
+    translated_parts: list[Path | None],
+) -> None:
+    state["documents"][key] = {
+        "original": str(original),
+        "status": "google_temp_skipped",
+        "skip_reason": reason,
+        "skip_detail": detail[:1000],
+        "parts": [str(p) for p in parts],
+        "translated_parts": [str(p) for p in translated_parts if p],
         **file_signature(original),
         "updated_at": now_iso(),
     }
@@ -690,6 +794,10 @@ class GoogleTranslateNoContentError(RuntimeError):
     pass
 
 
+class GoogleTranslateSkipError(RuntimeError):
+    pass
+
+
 class ChromeTranslateBot:
     def __init__(self, download_dir: Path):
         self.download_dir = download_dir
@@ -834,16 +942,12 @@ class ChromeTranslateBot:
                 return self._translate_file_once(upload_path, attempt)
             except GoogleTranslateRetryableError as exc:
                 last_error = exc
-                if attempt > TRANSLATE_ERROR_RETRIES:
-                    raise
                 logger.warning(
-                    "Google Translate a refuzat temporar fisierul (%s/%s): %s",
-                    attempt,
-                    TRANSLATE_ERROR_RETRIES + 1,
+                    "Google Translate a refuzat temporar fisierul; il sar pentru aceasta rulare: %s",
                     exc,
                 )
                 self._open_translate_single_tab()
-                time.sleep(10)
+                raise GoogleTranslateSkipError(str(exc)) from exc
             except TimeoutException as exc:
                 last_error = exc
                 existing = find_existing_translation_for_part(upload_path)
@@ -1092,6 +1196,7 @@ def cleanup_document_intermediates(prepared: PreparedDocument, downloads: Iterab
 def process_documents(args: argparse.Namespace) -> int:
     ensure_dirs()
     state = load_state()
+    move_completed_source_documents(ARCHIVE_PATH, FINAL_DIR, state)
     docs = scan_documents(ARCHIVE_PATH)
     known_docs = {doc_id(p): p for p in docs}
     resume_docs: list[Path] = []
@@ -1318,6 +1423,7 @@ def process_documents(args: argparse.Namespace) -> int:
                 )
                 continue
 
+            google_skip_detail: str | None = None
             for part_index, part in enumerate(prepared.upload_parts, 1):
                 existing_download = translated_parts[part_index - 1]
                 if existing_download and existing_download.exists():
@@ -1339,6 +1445,25 @@ def process_documents(args: argparse.Namespace) -> int:
                 logger.info("Upload parte %s/%s: %s", part_index, len(prepared.upload_parts), part.name)
                 try:
                     downloaded = bot.translate_file(part)
+                except GoogleTranslateSkipError as exc:
+                    google_skip_detail = f"Parte {part_index}/{len(prepared.upload_parts)} ({part.name}): {exc}"
+                    logger.warning(
+                        "[%s/%s] Skip Google Translate temporar: %s | %s",
+                        index,
+                        len(docs),
+                        original,
+                        google_skip_detail,
+                    )
+                    mark_document_temp_skipped(
+                        state,
+                        key,
+                        original,
+                        "google_translate_temporary_refusal",
+                        google_skip_detail,
+                        prepared.upload_parts,
+                        translated_parts,
+                    )
+                    break
                 except GoogleTranslateNoContentError as exc:
                     logger.warning(
                         "Google nu a detectat continut traductibil pentru %s, partea %s/%s. "
@@ -1400,6 +1525,9 @@ def process_documents(args: argparse.Namespace) -> int:
                     logger.info("Pauza intre parti: %s secunde", BETWEEN_PARTS_SEC)
                     time.sleep(BETWEEN_PARTS_SEC)
 
+            if google_skip_detail:
+                continue
+
             ready_parts = [p for p in translated_parts if p and p.exists()]
             if len(ready_parts) < len(prepared.upload_parts):
                 logger.warning(
@@ -1422,6 +1550,12 @@ def process_documents(args: argparse.Namespace) -> int:
             }
             if no_content_parts:
                 state_entry["no_content_parts"] = no_content_parts
+            if original.exists() and not source_is_in_completed_dir(original):
+                COMPLETED_SOURCE_DIR.mkdir(parents=True, exist_ok=True)
+                dest = unique_destination(COMPLETED_SOURCE_DIR, original.name)
+                shutil.move(str(original), str(dest))
+                state_entry["source_moved_to"] = str(dest)
+                logger.info("Mutat original finalizat: %s -> %s", original, dest)
             state["documents"][key] = state_entry
             save_state(state)
             cleanup_document_intermediates(prepared, ready_parts)
