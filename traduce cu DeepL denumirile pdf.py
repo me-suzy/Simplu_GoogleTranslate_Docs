@@ -18,11 +18,13 @@ daca PDF-urile sunt in alta parte.
 """
 
 import argparse
+import json
 import logging
 import re
 import subprocess
 import sys
 import time
+import unicodedata
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -41,6 +43,7 @@ PROJECT_DIR = Path(__file__).resolve().parent
 PDF_DIR = PROJECT_DIR / "final_pdf"
 LOG_DIR = PROJECT_DIR / "logs"
 START_CHROME_PS1 = PROJECT_DIR / "PowerShell" / "Start-ChromeDebug.ps1"
+STATE_FILE = PROJECT_DIR / "state_deepl_pdf_rename.json"
 
 DEEPL_URL = "https://www.deepl.com/en/translator"
 CHROME_PATH = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
@@ -231,6 +234,25 @@ def clean_source_name(pdf_path: Path) -> str:
     return text
 
 
+def history_key(text: str) -> str:
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = re.sub(r"[^a-zA-Z0-9]+", " ", text)
+    return re.sub(r"\s+", " ", text).strip().casefold()
+
+
+def fix_mojibake(text: str) -> str:
+    if not text:
+        return text
+    if not re.search(r"[ÃÂâÈÄ]", text):
+        return text
+    try:
+        fixed = text.encode("cp1252").decode("utf-8")
+    except UnicodeError:
+        return text
+    return fixed if fixed else text
+
+
 def is_raw_pdf_name(pdf_path: Path) -> bool:
     stem = pdf_path.stem.casefold()
     return "compress" in stem or "finalizat" in stem
@@ -273,6 +295,124 @@ def unique_destination(path: Path) -> Path:
         if not candidate.exists():
             return candidate
     raise RuntimeError(f"Nu pot gasi un nume liber pentru: {path}")
+
+
+def empty_state() -> dict:
+    return {
+        "version": 1,
+        "updated_at": datetime.now().isoformat(timespec="seconds"),
+        "records": [],
+    }
+
+
+def load_state(path: Path = STATE_FILE) -> dict:
+    if not path.exists():
+        return empty_state()
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            state = json.load(handle)
+    except Exception as exc:
+        logger.warning("Nu pot citi JSON-ul de stare %s: %s. Pornesc cu stare goala.", path, exc)
+        return empty_state()
+    if not isinstance(state, dict):
+        return empty_state()
+    state.setdefault("version", 1)
+    state.setdefault("records", [])
+    return state
+
+
+def save_state(state: dict, path: Path = STATE_FILE) -> None:
+    state["updated_at"] = datetime.now().isoformat(timespec="seconds")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = path.with_suffix(path.suffix + ".tmp")
+    with tmp_path.open("w", encoding="utf-8") as handle:
+        json.dump(state, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+    tmp_path.replace(path)
+
+
+def state_source_keys(state: dict) -> set[str]:
+    return {
+        str(record.get("source_key", ""))
+        for record in state.get("records", [])
+        if record.get("status") == "renamed" and record.get("source_key")
+    }
+
+
+def upsert_state_record(
+    state: dict,
+    *,
+    source_text: str,
+    original_name: str,
+    translated_text: str,
+    final_name: str,
+    status: str = "renamed",
+    log_path: Path | None = None,
+) -> None:
+    source_key = history_key(source_text)
+    records = state.setdefault("records", [])
+    existing = next((record for record in records if record.get("source_key") == source_key), None)
+    record = {
+        "source_key": source_key,
+        "source_text": source_text,
+        "original_name": original_name,
+        "translated_text": fix_mojibake(translated_text),
+        "final_name": fix_mojibake(final_name),
+        "status": status,
+        "renamed_at": datetime.now().isoformat(timespec="seconds"),
+    }
+    if log_path is not None:
+        record["log_path"] = str(log_path)
+    if existing is None:
+        records.append(record)
+    else:
+        existing.update(record)
+
+
+def rebuild_state_from_logs(log_dir: Path, state_path: Path) -> dict:
+    state = empty_state()
+    log_files = sorted(log_dir.glob("deepl_pdf_rename_*.log"))
+    for log_file in log_files:
+        content = log_file.read_text(encoding="utf-8", errors="replace")
+        if "Mod dry-run" in content:
+            continue
+
+        current_original = ""
+        current_source = ""
+        current_translated = ""
+        for raw_line in content.splitlines():
+            line = raw_line.strip()
+            match = re.search(r"\[INFO\] \[\d+/\d+\] (.+)$", line)
+            if match:
+                current_original = match.group(1).strip()
+                current_source = ""
+                current_translated = ""
+                continue
+
+            match = re.search(r"\[INFO\] Text pentru DeepL: (.+)$", line)
+            if match:
+                current_source = match.group(1).strip()
+                continue
+
+            match = re.search(r"\[INFO\] Tradus: (.+)$", line)
+            if match:
+                current_translated = collapse_repeated_text(match.group(1).strip())
+                continue
+
+            match = re.search(r"\[INFO\] Nume nou: (.+)$", line)
+            if match and current_original and current_source and current_translated:
+                final_name = fix_mojibake(match.group(1).strip())
+                upsert_state_record(
+                    state,
+                    source_text=current_source,
+                    original_name=current_original,
+                    translated_text=current_translated,
+                    final_name=final_name,
+                    log_path=log_file,
+                )
+
+    save_state(state, state_path)
+    return state
 
 
 def dismiss_popups(driver: webdriver.Chrome) -> None:
@@ -496,6 +636,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=0, help="Numar maxim de PDF-uri. 0 = toate.")
     parser.add_argument("--only-name", default="", help="Proceseaza doar PDF-urile care contin acest text in nume.")
     parser.add_argument("--dry-run", action="store_true", help="Afiseaza noul nume fara redenumire.")
+    parser.add_argument("--state-file", default=str(STATE_FILE), help="JSON-ul cu istoricul redenumirilor.")
+    parser.add_argument(
+        "--rebuild-state-from-logs",
+        action="store_true",
+        help="Reconstruieste JSON-ul de stare din logurile DeepL si se opreste.",
+    )
+    parser.add_argument(
+        "--list-pending",
+        action="store_true",
+        help="Afiseaza PDF-urile brute care nu exista in JSON, fara Chrome/DeepL.",
+    )
     parser.add_argument(
         "--include-clean-names",
         action="store_true",
@@ -514,28 +665,67 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    state_path = Path(args.state_file)
+
+    if args.rebuild_state_from_logs:
+        state = rebuild_state_from_logs(LOG_DIR, state_path)
+        logger.info("JSON stare reconstruit: %s", state_path)
+        logger.info("Intrari in JSON: %s", len(state.get("records", [])))
+        return 0
+
+    state = load_state(state_path)
+    completed_source_keys = state_source_keys(state)
+    logger.info("JSON stare: %s", state_path)
+    logger.info("Intrari deja redenumite in JSON: %s", len(completed_source_keys))
+
     folder = Path(args.folder)
     if not folder.exists():
         logger.error("Folderul nu exista: %s", folder)
         return 2
 
     pdfs = iter_pdfs(folder, args.only_name or None)
+    skipped_history = 0
     if not args.include_clean_names:
         before = len(pdfs)
         pdfs = [path for path in pdfs if is_raw_pdf_name(path)]
         skipped_clean = before - len(pdfs)
     else:
         skipped_clean = 0
+
+    pending_pdfs: list[Path] = []
+    for path in pdfs:
+        source_text = clean_source_name(path)
+        if history_key(source_text) in completed_source_keys:
+            skipped_history += 1
+            logger.info("Sar deja redenumit in JSON: %s", path.name)
+            continue
+        pending_pdfs.append(path)
+    pdfs = pending_pdfs
+
     if args.limit > 0:
         pdfs = pdfs[: args.limit]
+
+    if args.list_pending:
+        logger.info("Folder PDF: %s", folder)
+        logger.info("PDF-uri brute sarite fiindca sunt deja in JSON: %s", skipped_history)
+        logger.info("PDF-uri deja curate/fara FINALIZAT/compress sarite: %s", skipped_clean)
+        logger.info("PDF-uri noi de redenumit: %s", len(pdfs))
+        for path in pdfs:
+            logger.info("PENDING: %s | text: %s", path.name, clean_source_name(path))
+        return 0
+
     if not pdfs:
         logger.warning("Nu am gasit PDF-uri de procesat in: %s", folder)
+        if skipped_history:
+            logger.info("Toate PDF-urile brute gasite erau deja in JSON: %s", skipped_history)
         return 0
 
     logger.info("Folder PDF: %s", folder)
     logger.info("PDF-uri selectate: %s", len(pdfs))
     if skipped_clean:
         logger.info("Sar PDF-uri deja curate/fara FINALIZAT/compress: %s", skipped_clean)
+    if skipped_history:
+        logger.info("Sar PDF-uri deja redenumite in JSON: %s", skipped_history)
     logger.info("Pauza intre denumiri: %.1f secunde", args.delay)
     if args.dry_run:
         logger.info("Mod dry-run: nu redenumesc fisierele.")
@@ -559,6 +749,16 @@ def main() -> int:
                     destination = rename_pdf(pdf_path, translated, args.dry_run)
                     if destination.name != pdf_path.name and not args.dry_run:
                         renamed += 1
+                        upsert_state_record(
+                            state,
+                            source_text=source_text,
+                            original_name=pdf_path.name,
+                            translated_text=translated,
+                            final_name=destination.name,
+                            log_path=LOG_PATH,
+                        )
+                        save_state(state, state_path)
+                        completed_source_keys.add(history_key(source_text))
                     logger.info("Tradus: %s", translated)
                     logger.info("Nume nou: %s", destination.name)
                     last_error = ""
